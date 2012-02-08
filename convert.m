@@ -1,5 +1,5 @@
 %	IM7 to .ppt converter.
-%	Version: 0.1
+%	Version: 0.2
 %	Author: Ben Falconer
 %	This requires that Powerpoint (at least 2007) is installed on the
 %	computer and the following Matlab libraries:
@@ -15,14 +15,25 @@
 %	file and save path upon each run, later versions should be able to be
 %	passed a path and save a .ppt with the correct name as well as
 %	formatting the slides in a more appropriate format.
+%
+%	TODO:
+%		Add footers and titles to the slides
+%		Change to a function which can be passed a folder name
+%		Stop non-stereoscopic images producing plots in the z direction
+%		Check if file already exists and make a new file if so
 
+%file basename, this should generally be the folder name assuming that the
+%files are in the standard B000XX_*.im7 format
+filebase = '17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm';
+%filename for a template, leave blank if none is required.
+template = 'template.potx';
 %max number of .im7 files, this is 17 by default
 max = 17;
 figs = [];
 for i=1:max
 	%it is currently necessary to add the file name here, this will be
 	%changed in a later version.
-	fname = strcat('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm\B000',sprintf('%02d',i),'*')
+	fname = strcat(filebase,'\B000',sprintf('%02d',i),'*')
 	v = loadvec(fname);
 	%use the I scaling factor if it applies to the current image:
 	Scale = regexp(v.Attributes,'_SCALE_I=([\d\.]*);','tokens');
@@ -37,7 +48,7 @@ for i=1:max
 	%Powerpoint slide:
 	figs = [figs a];
 	if mod(i,4)==0 || i==max
-		saveppt2('test.ppt','resolution',600,'f',figs)
+		saveppt2(strcat(filebase,'.ppt'),'resolution',600,'f',figs,'template',template)
 		figs = [];
 		close all;
 	end
