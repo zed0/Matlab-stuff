@@ -1,6 +1,12 @@
 %	IM7 to .ppt converter.
 %	Version: 0.2
 %	Author: Ben Falconer
+%	Synatx:
+%		im2ppt(basename, [template, [padding]])
+%		im2ppt('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm')
+%		im2ppt('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm', 'template.potx')
+%		im2ppt('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm', 'template.potx', [0, 0, 0, 60])
+%
 %	This requires that Powerpoint (at least 2007) is installed on the
 %	computer and the following Matlab libraries:
 %	pivmat:
@@ -29,24 +35,31 @@
 %padding, this is used for padding around the images, this is useful when
 %using a template as it allows definition of padding at the bottom
 %padding = [left, right, top, bottom]
-function im2ppt(filebase, padding)
+function im2ppt(filebase, template, padding)
 	if nargin < 2
+		template = '';
+	end
+	if nargin < 3
 		padding = 0;
 	end
-	%filename for a template, leave blank if none is required.
-	template = 'template.potx';
 	%max number of .im7 files, this is 17 by default
 	max = 17;
+
 	figs = [];
+	pptname = strcat(filebase,'.ppt');
+	if strcmp('',template)
+		ppt=saveppt2(pptname,'init');
+	else
+		ppt=saveppt2(pptname,'init','template',template);
+	end
+	
 	for i=1:max
-		%it is currently necessary to add the file name here, this will be
-		%changed in a later version.
 		fname = strcat(filebase,'\B000',sprintf('%02d',i),'*')
 		v = loadvec(fname);
 		%use the I scaling factor if it applies to the current image:
 		Scale = regexp(v.Attributes,'_SCALE_I=([\d\.]*);','tokens');
 		if size(Scale) > 0
-			Scale_I = str2num(char(Scale{1}));
+			Scale_I = str2double(char(Scale{1}));
 			v.w = v.w*Scale_I;
 		end
 		%output the plot to a figure
@@ -56,9 +69,11 @@ function im2ppt(filebase, padding)
 		%Powerpoint slide:
 		figs = [figs a];
 		if mod(i,4)==0 || i==max
-			saveppt2(strcat(filebase,'.ppt'),'resolution',600,'f',figs,'template',template,'padding',padding)
+			saveppt2('ppt',ppt,'figure',figs,'resolution',600,'padding',padding)
 			figs = [];
 			close all;
 		end
 	end
+	saveppt2(pptname,'ppt',ppt,'save');
+	saveppt2(pptname,'ppt',ppt,'close');
 end
