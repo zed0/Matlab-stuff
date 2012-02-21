@@ -6,6 +6,7 @@
 %		im2ppt('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm')
 %		im2ppt('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm', 'template.potx')
 %		im2ppt('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm', 'template.potx', [0, 0, 0, 60])
+%		im2ppt('17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm', 'template.potx', [0, 0, 0, 60], 'intro text')
 %
 %	This requires that Powerpoint (at least 2007) is installed on the
 %	computer and the following Matlab libraries:
@@ -35,12 +36,15 @@
 %padding, this is used for padding around the images, this is useful when
 %using a template as it allows definition of padding at the bottom
 %padding = [left, right, top, bottom]
-function im2ppt(filebase, template, padding)
+function im2ppt(filebase, template, padding, introtext)
 	if nargin < 2
 		template = '';
 	end
 	if nargin < 3
 		padding = 0;
+	end
+	if nargin < 4
+		introtext = '';
 	end
 	%max number of .im7 files, this is 17 by default
 	max = 17;
@@ -53,6 +57,10 @@ function im2ppt(filebase, template, padding)
 		ppt=saveppt2(pptname,'init','template',template);
 	end
 	
+	if ~strcmp('',introtext)
+		saveppt2('ppt',ppt,'padding',padding,'textbox',introtext);
+	end
+
 	for i=1:max
 		fname = strcat(filebase,'\B000',sprintf('%02d',i),'*')
 		v = loadvec(fname);
