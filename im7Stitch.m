@@ -45,35 +45,51 @@ function [target] = im7Stitch(foldername, filenumber)
 
 		xPos = str2num(char(matches{1}));
 		xPos = round(xPos * Scale_X);
+				
+		matches = regexp(v.setname,'Dy(\d*)-','tokens');
+		if(size(matches)==0)
+			err = MException('Im7Convert:NoXPosition', 'No Y position is given in the metadata for this file');
+			throw(err);
+		end
+
+		yPos = str2num(char(matches{1}));
+		yPos = -1*round(yPos * 2 *Scale_Y); %For some reason there is a factor of 2 here. :|
 		
 		if(size(target)==0)
 			target = v.w;
 			divMat = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;
 			initialX = xPos;
+			initialY = yPos;
 		else
-			binMat = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;
+ 			binMat = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;
+			[r2,c2] = size(v.w);
+			xRange = 1:c2;
+			yRange = 1:r2;
+			[r1,c1] = size(target);
 			if(xPos > initialX)
-				[r1,c1] = size(target);
-				[r2,c2] = size(v.w);
 				target = [target zeros(r1, (xPos-initialX)-(c1-c2))];
 				divMat = [divMat zeros(r1, (xPos-initialX)-(c1-c2))];
-				[r1,c1] = size(v.w);
-				target(1:r1, 1+xPos-initialX:c1+xPos-initialX) = target(1:r1, 1+xPos-initialX:c1+xPos-initialX) + v.w;
-				divMat(1:r1, 1+xPos-initialX:c1+xPos-initialX) = divMat(1:r1, 1+xPos-initialX:c1+xPos-initialX) + binMat;
+				xRange = 1+xPos-initialX:c2+xPos-initialX;
 			elseif (xPos < initialX)
-				[r1,c1] = size(target);
 				target = [zeros(r1, initialX-xPos) target];
 				divMat = [zeros(r1, initialX-xPos) divMat];
-				[r1,c1] = size(v.w);
-				target(1:r1, 1:c1) = target(1:r1, 1:c1) + v.w;
-				divMat(1:r1, 1:c1) = divMat(1:r1, 1:c1) + binMat;
 				initialX = xPos;
 			end
-
+			[r1,c1] = size(target);
+			if(yPos > initialY)
+				target = [target;zeros((yPos-initialY)-(r1-r2), c1)];
+				divMat = [divMat;zeros((yPos-initialY)-(r1-r2), c1)];
+				yRange = 1+yPos-initialY:r2+yPos-initialY;
+			elseif (yPos < initialY)
+				target = [zeros(initialY-yPos, c1);target];
+				divMat = [zeros(initialY-yPos, c1);divMat];
+				initialY = yPos;
+			end
+			target(yRange, xRange) = target(yRange, xRange) + v.w;
+			divMat(yRange, xRange) = divMat(yRange, xRange) + binMat;
 		end
 	end
 	target = target ./ divMat;
-	[r1,c1] = size(target);
 	imagesc([0 r1*Scale_Y],[0 c1*Scale_X],target);
 	return;
 end
