@@ -16,11 +16,21 @@
 % im2ppt('17May3CUp-TP4-0.1Dy322-3c5mus', 'template.potx', [0, 0, 0, 60],text)
 
 %% Image Stitching:
-folders={
-	'18May2C-TP4-9Dy272-3c10mus2c10mus1.9msX254mm';
-	'18May2C-TP4-9Dy272-3c10mus2c10mus1.5msX381mm';
-	'18May2C-TP4-9Dy272-3c10mus2c10mus1.1msX508mm';
-	'18May2C-TP4-9Dy272-3c10mus2c10mus0.8msX635mm';
-}
+% folders={
+% 	'18May2C-TP4-9Dy272-3c10mus2c10mus0.8msX635mm';
+% 	'18May2C-TP4-7Dy272-3c8mus2c8mus0.8msX635mm';
+% 	'18May2C-TP4-15Dy222-2c11musX0mm';
+% 	'18May2C-TP4-15Dy422-2c11musX320mm';
+% 	'18May2C-TP4-15Dy422-2c11musX640mm';
+% 	'18May2C-TP4-18Dy200-2c11musX480mm';
+% 	'18May2C-TP4-18Dy200-2c11musX640mm';
+% }
+% result = im7Stitch(folders);
 
-result = im7Stitch(folders);
+folderList2=dir('*2C-TP4*mm');
+folders2={folderList2.name}.'
+
+result = im7Stitch(folders2);
+
+
+

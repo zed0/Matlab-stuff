@@ -10,6 +10,7 @@ function [target] = im7Stitch(foldername, filenumber)
 %		}
 %		result = im7Stitch(folders);
 
+	D = 200.0;
 	if(nargin < 2)
 		filenumber = 4;
 	end
@@ -36,7 +37,9 @@ function [target] = im7Stitch(foldername, filenumber)
 		matches = regexp(v.Attributes,'_SCALE_Y=([-\d\.]*);','tokens');
 		Scale_Y = str2num(char(matches{1}));
 
-		v.w = v.w*Scale_I;
+		disp(strcat(char(foldername(i)),'Scale_I=',num2str(Scale_I),'; Scale_X=',num2str(Scale_X),'; Scale_Y=',num2str(Scale_Y)));
+
+ 		v.w = v.w*Scale_I;
 		matches = regexp(v.setname,'X(\d*)mm','tokens');
 		if(size(matches)==0)
 			err = MException('Im7Convert:NoXPosition', 'No X position is given in the metadata for this file');
@@ -44,17 +47,26 @@ function [target] = im7Stitch(foldername, filenumber)
 		end
 
 		xPos = str2num(char(matches{1}));
+
+		matches = regexp(v.setname,'-(\d*)Dy','tokens');
+		if(size(matches)==0)
+			err = MException('Im7Convert:NoDPosition', 'No D position is given in the metadata for this file');
+			throw(err);
+		end
+		Distance = D*str2num(char(matches{1}));
+		xPos = xPos - Distance;
 		xPos = round(xPos * Scale_X);
-				
+		
 		matches = regexp(v.setname,'Dy(\d*)-','tokens');
 		if(size(matches)==0)
-			err = MException('Im7Convert:NoXPosition', 'No Y position is given in the metadata for this file');
+			err = MException('Im7Convert:NoYPosition', 'No Y position is given in the metadata for this file');
 			throw(err);
 		end
 
 		yPos = str2num(char(matches{1}));
-		yPos = -1*round(yPos * 2 *Scale_Y); %For some reason there is a factor of 2 here. :|
-		
+		yPos = -1*round(yPos *2*Scale_Y); %For some reason there is a factor of 2 here.
+		%yPos = -1*round(yPos *Scale_Y);
+
 		if(size(target)==0)
 			target = v.w;
 			divMat = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;
@@ -90,6 +102,7 @@ function [target] = im7Stitch(foldername, filenumber)
 		end
 	end
 	target = target ./ divMat;
-	imagesc([0 r1*Scale_Y],[0 c1*Scale_X],target);
+	[r1,c1] = size(target);
+	imagesc([c1*Scale_X 0],[r1*Scale_Y 0],target);
 	return;
 end
