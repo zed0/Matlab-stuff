@@ -46,7 +46,7 @@ function [target] = im7Stitch(foldername, filenumber)
 			throw(err);
 		end
 
-		xPos = str2num(char(matches{1}));
+		xPos = 720 - str2num(char(matches{1}));
 
 		matches = regexp(v.setname,'-(\d*)Dy','tokens');
 		if(size(matches)==0)
@@ -55,9 +55,7 @@ function [target] = im7Stitch(foldername, filenumber)
 		end
 		
 		Distance = D*str2num(char(matches{1}));
- 		if Distance > 2200
- 			xPos = 720 - xPos;
- 		end
+
 		xPos = xPos - Distance;
 		xPos = round(xPos * Scale_X);
 		
