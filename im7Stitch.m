@@ -10,7 +10,7 @@ function [target] = im7Stitch(foldername, filenumber)
 %		}
 %		result = im7Stitch(folders);
 
-	D = 200.0;
+	D = 157.43;
 	if(nargin < 2)
 		filenumber = 4;
 	end
@@ -53,7 +53,11 @@ function [target] = im7Stitch(foldername, filenumber)
 			err = MException('Im7Convert:NoDPosition', 'No D position is given in the metadata for this file');
 			throw(err);
 		end
+		
 		Distance = D*str2num(char(matches{1}));
+ 		if Distance > 2200
+ 			xPos = 720 - xPos;
+ 		end
 		xPos = xPos - Distance;
 		xPos = round(xPos * Scale_X);
 		

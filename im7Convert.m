@@ -1,4 +1,4 @@
-function [ result ] = im7Convert( filename )
+function [ v result ] = im7Convert( filename )
 %IM7CONVERT Convert a file from an im7 to a sensible format
 %	Pass this a .im7 file to scale it for viewing.
 %	The return value can be saved as a matrix.
