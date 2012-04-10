@@ -61,14 +61,20 @@ function im2ppt(filebase, template, padding, introtext)
 		saveppt2('ppt',ppt,'padding',padding,'textbox',introtext);
 	end
 
+	%make a vector of up to 4 figures and then add all the figures to a
+	%Powerpoint slide:
+	saveppt2('ppt',ppt,'figure',figs,'resolution',600,'padding',padding)
+	figs = [];
+	close all;
+
 	for i=1:max
 		fname = strcat(filebase,'\B000',sprintf('%02d',i),'*')
 		v = loadvec(fname);
 		%use the I scaling factor if it applies to the current image:
-		Scale = regexp(v.Attributes,'_SCALE_I=([\d\.]*);','tokens');
-		if size(Scale) > 0
-			Scale_I = str2double(char(Scale{1}));
-			v.w = v.w*Scale_I;
+		try
+			[ scaleI ] = getScale(v.Attributes, 'I');
+			v.w = v.w*scaleI;
+		catch err
 		end
 		%output the plot to a figure
 		a = figure();
