@@ -14,7 +14,7 @@ function [target] = im7Stitch(foldername, filenumber)
 	if(nargin < 2)
 		filenumber = 4;
 	end
-	fileRegex = ['B' sprintf('%05d', filenumber) '*.im7'];
+	fileRegex = ['B' sprintf('%05d', filenumber) '*.im7'];	%pad filename witn 0's
 	target = zeros(0,0);
 	mask = zeros(size(target));
 	initialX = 0;
@@ -34,7 +34,7 @@ function [target] = im7Stitch(foldername, filenumber)
 		[ scaleX offsetX ] = getScale(v.Attributes, 'X');
 		[ scaleY offsetY ] = getScale(v.Attributes, 'Y');
 
-		disp(strcat(char(foldername(i)),'Scale_I=',num2str(scaleI),'; Scale_X=',num2str(scaleX),'; Scale_Y=',num2str(scaleY)));
+		disp(strcat(char(foldername(i)),'scaleI=',num2str(scaleI),'; scaleX=',num2str(scaleX),'; scaleY=',num2str(scaleY)));
 
  		v.w = v.w*scaleI;
 

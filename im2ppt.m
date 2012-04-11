@@ -1,3 +1,4 @@
+function im2ppt(filebase, template, padding, introtext)
 %	IM7 to .ppt converter.
 %	Version: 0.2
 %	Author: Ben Falconer
@@ -36,7 +37,6 @@
 %padding, this is used for padding around the images, this is useful when
 %using a template as it allows definition of padding at the bottom
 %padding = [left, right, top, bottom]
-function im2ppt(filebase, template, padding, introtext)
 	if nargin < 2
 		template = '';
 	end

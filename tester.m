@@ -16,11 +16,26 @@
 % im2ppt('17May3CUp-TP4-0.1Dy322-3c5mus', 'template.potx', [0, 0, 0, 60],text)
 % 
 
-%% Cross Plotting:
-% folderList2=dir('*3CUp-TP4*us');
+% Cross Plotting:
+% folderList2=dir('*us');
 % folders2={folderList2.name}.'
 % result = crossplot(folders2);
 
+folders2={
+%    '7Oct3C-TP12-0.5Dy212-3c12mus';
+    '7Oct3C-TP12-1.5Dy212-3c12mus';
+    '7Oct3C-TP12-12Dy192-3c17mus';
+    '7Oct3C-TP12-15Dy192-3c17mus';
+    '7Oct3C-TP12-1Dy212-3c12mus';
+    '7Oct3C-TP12-2.85Dy212-3c12mus';
+    '7Oct3C-TP12-2Dy212-3c12mus';
+    '7Oct3C-TP12-3.5Dy242-3c12mus';
+    '7Oct3C-TP12-3Dy242-3c12mus';
+    '7Oct3C-TP12-4Dy242-3c12mus';
+    '7Oct3C-TP12-6Dy242-3c12mus';
+    '7Oct3C-TP12-8Dy242-3c15mus';
+}
+result = crossplot(folders2);
 
 %% Image Stitching:
 % folders={
@@ -34,10 +49,16 @@
 % }
 % result = im7Stitch(folders);
 
-folderList2=dir('*2C-TP4*mm');
-folders2={folderList2.name}.'
-result = im7Stitch(folders2);
+% folderList2=dir('*2C-TP4*mm');
+% folders2={folderList2.name}.'
+% result = im7Stitch(folders2);
 
-% im7Convert(/B00004_abs(Avg V).im7');
-% figure;
-% im7Convert();
+%% Dimension scaling:
+
+% im7Convert('B00004_abs(Avg V).im7');
+
+%% Renamer script:
+
+% folderList2=dir('*');
+% folders2={folderList2.name}.'
+% rename(folders2);
