@@ -73,4 +73,8 @@ folders2={
 	'Symphony-TP1B';
 	'Symphony-TP1C';
 }
-pptVelocityComparison(folders2, 'velocityPlots', 4, 'template.potx', [0, 0, 0, 60]);
+pptVelocityComparison(folders2, 'velocityPlots', 4, '', [0, 0, 0, 0]);
+% lowerLimit =
+%  -252.2330
+% upperLimit =
+%   353.4682

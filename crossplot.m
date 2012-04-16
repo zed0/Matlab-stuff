@@ -50,17 +50,12 @@ function crossplot(foldername, format, filenumber)
 		%Central point seems to be 35mm
 		cutPoint = 35;
 		
-		%Traverse baseline: 192mm
-		travBase = 192;
+		%Traverse baseline: 272mm
+		travBase = 272;
 
 		cutPoint = round(abs((cutPoint + offsetX) / scaleX)); %convert cut point to our axes
 		section = v.w(cutPoint,:);
-		sectionLength = (size(section,2)-1);
-		totalOffsetY = offsetY + (str2double(getAttribute(v.setname, 'y')) - travBase);
-		lowerLimit = -(totalOffsetY);
-		upperLimit = -((sectionLength)*scaleY + totalOffsetY);
-		scale = lowerLimit:-scaleY:upperLimit; %coordinates are backwards
-
+		travY = -(str2double(getAttribute(v.setname, 'y')) - travBase);
 		if i<8
 			style = '-';
 		elseif i<15
@@ -97,13 +92,13 @@ function crossplot(foldername, format, filenumber)
 		label = char(strcat(getAttribute(v.setname, 'd'),'D'));
 
 		if strcmp(format,'normal')
-			h = plot(scale, section, style, 'color', cmap(i,:));
+			h = plot(v.x + travY, section, style, 'color', cmap(i,:));
 			set(h,'LineWidth',1.5);
 			set(h,'Parent',hGroup);
 		elseif strcmp(format,'spatial')
 			offsetD = D*str2double(getAttribute(v.setname, 'd'));
-			h = plot(section + offsetD, scale, style, 'color', cmap(i,:));
-			j = plot([offsetD offsetD],[lowerLimit upperLimit],':', 'color', cmap(i,:));
+			h = plot(section + offsetD, v.x + travY, style, 'color', cmap(i,:));
+			j = plot([offsetD offsetD],[min(v.x)+travY max(v.x)+travY],':', 'color', cmap(i,:));
 			set(h,'LineWidth',1.5);
 			set(j,'Parent',hGroup);
 			set(h,'Parent',hGroup);

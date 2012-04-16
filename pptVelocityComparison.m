@@ -78,9 +78,22 @@ function pptVelocityComparison(folders, outputFile, fileNumber, template, paddin
 						v.w = v.w*scaleI;
 					catch err
 					end
-					showf(v,'cmap','jet','CLim',[0 300]);
-					title(['Testpoint ', folderTestPoints{row}, ', ', getAttribute(folderNames{i}, 'd'), 'D']);
-					disp(char(folderNames(i)));
+					%Traverse baseline: 272mm
+					travBase = 272;
+					[scaleY] = getScale(v.Attributes, 'Y');
+					travY = (str2double(getAttribute(folderNames{i}, 'y')) - travBase)/scaleY;
+					translate = [1 0 0; 0 1 0; 0 travY 1];
+					transform = maketform('affine',translate);
+					v.w = imtransform(v.w, transform,'XData',[1, size(v.w,2)],'YData',[1 size(v.w,1)]);
+					imagesc(v.x, v.y, v.w',[50 300]);
+					set(gca,'YDir','normal');
+					c = colorbar;
+					t = title(['Testpoint ', folderTestPoints{row}, ', ', getAttribute(folderNames{i}, 'd'), 'D']);
+					xlabel([v.namex ' (' v.unitx ')']);
+					ylabel([v.namey ' (' v.unity ')']);
+					ylabel(c,[v.namew ' (' v.unitw ')']);
+					set(t, 'FontSize', 20);
+ 					disp(char(folderNames(i)));
 					i = i+1;
 				end
 				figs(row,col) = a;
