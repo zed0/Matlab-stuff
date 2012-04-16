@@ -19,23 +19,27 @@
 % Cross Plotting:
 % folderList2=dir('*us');
 % folders2={folderList2.name}.'
-% result = crossplot(folders2);
-
-folders2={
-%    '7Oct3C-TP12-0.5Dy212-3c12mus';
-    '7Oct3C-TP12-1.5Dy212-3c12mus';
-    '7Oct3C-TP12-12Dy192-3c17mus';
-    '7Oct3C-TP12-15Dy192-3c17mus';
-    '7Oct3C-TP12-1Dy212-3c12mus';
-    '7Oct3C-TP12-2.85Dy212-3c12mus';
-    '7Oct3C-TP12-2Dy212-3c12mus';
-    '7Oct3C-TP12-3.5Dy242-3c12mus';
-    '7Oct3C-TP12-3Dy242-3c12mus';
-    '7Oct3C-TP12-4Dy242-3c12mus';
-    '7Oct3C-TP12-6Dy242-3c12mus';
-    '7Oct3C-TP12-8Dy242-3c15mus';
-}
-result = crossplot(folders2);
+% crossplot(folders2,'normal',3);
+% figure
+% crossplot(folders2,'spatial',3);
+% 
+% folders2={
+% %    '7Oct3C-TP12-0.5Dy212-3c12mus';
+%     '7Oct3C-TP12-1.5Dy212-3c12mus';
+%     '7Oct3C-TP12-12Dy192-3c17mus';
+%     '7Oct3C-TP12-15Dy192-3c17mus';
+%     '7Oct3C-TP12-1Dy212-3c12mus';
+%     '7Oct3C-TP12-2.85Dy212-3c12mus';
+%     '7Oct3C-TP12-2Dy212-3c12mus';
+%     '7Oct3C-TP12-3.5Dy242-3c12mus';
+%     '7Oct3C-TP12-3Dy242-3c12mus';
+%     '7Oct3C-TP12-4Dy242-3c12mus';
+%     '7Oct3C-TP12-6Dy242-3c12mus';
+%     '7Oct3C-TP12-8Dy242-3c15mus';
+% }
+% crossplot(folders2,'normal',3);
+% figure
+% crossplot(folders2,'spatial',3);
 
 %% Image Stitching:
 % folders={
@@ -62,3 +66,11 @@ result = crossplot(folders2);
 % folderList2=dir('*');
 % folders2={folderList2.name}.'
 % rename(folders2);
+
+%% pptVelocityComparison
+folders2={
+	'Symphony-TP1A';
+	'Symphony-TP1B';
+	'Symphony-TP1C';
+}
+pptVelocityComparison(folders2, 'velocityPlots', 4, 'template.potx', [0, 0, 0, 60]);

@@ -1,4 +1,4 @@
-function [target] = crossplot(foldername, filenumber)
+function crossplot(foldername, format, filenumber)
 %	Cross plot function for IM7 images.
 %	Version: 0.1
 %	Author: Ben Falconer
@@ -9,12 +9,14 @@ function [target] = crossplot(foldername, filenumber)
 
 	D = 157.43;
 	if(nargin < 2)
+		format = 'normal';
+	end
+	if(nargin < 3)
 		filenumber = 4;
 	end
 	fileRegex = ['B' sprintf('%05d', filenumber) '*.im7'];
-	target = zeros(0,0);
 	legends = cell(size(foldername));
-	
+
 	colormap('lines');
 	cmap=colormap;
 
@@ -30,7 +32,7 @@ function [target] = crossplot(foldername, filenumber)
 		folder = char(foldername(i));
 		filename = dir([folder '/' fileRegex]);
 		if(isempty(filename))
-			err = MException('Im7Convert:FileNotFound', ['The folder ' folder ' does not contain the file you specified.']);
+			err = MException('crossplot:FileNotFound', ['The folder ' folder ' does not contain the file you specified.']);
 			throw(err);
 		end
 		filename = [folder '/' filename.name];
@@ -71,25 +73,53 @@ function [target] = crossplot(foldername, filenumber)
 
 		if i == 1
 			hold all;
-			axis([0 2200 -150 300]);
 			title(['Test point ' getAttribute(v.setname, 'tp') ', ' getAttribute(v.setname, 'day') getAttribute(v.setname, 'month')]);
 			[ ~,~,unitsY ] = getScale(v.Attributes, 'Y');
 			[ ~,~,unitsI ] = getScale(v.Attributes, 'I');
-			ylabel(unitsY);
-			xlabel(unitsI);
+			if strcmp(format,'normal')
+				axis([-150 200 50 300]);
+				ylabel(unitsI);
+				xlabel(unitsY);
+			elseif strcmp(format,'spatial')
+				xPlotRange = [0 2200];
+				yPlotRange = [-150 300];
+				ylabel(unitsY);
+				xlabel('D');
+				axis([xPlotRange, yPlotRange]);
+			else
+				err = MException('crossplot:plotTypeUnknown', ['The format ' format ' is not valid.']);
+				throw(err);
+			end
 		end
 		
 		section = medfilt1(section,7);
-		offsetD = D*str2double(getAttribute(v.setname, 'd'));
-		h = plot(section + offsetD, scale, style, 'color', cmap(i,:));
-		j = plot([offsetD offsetD],[lowerLimit upperLimit],':', 'color', cmap(i,:));
 		hGroup = hggroup;
-		set(j,'Parent',hGroup);
-		set(h,'Parent',hGroup);
-		set(get(get(hGroup,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); 
 		label = char(strcat(getAttribute(v.setname, 'd'),'D'));
+
+		if strcmp(format,'normal')
+			h = plot(scale, section, style, 'color', cmap(i,:));
+			set(h,'LineWidth',1.5);
+			set(h,'Parent',hGroup);
+		elseif strcmp(format,'spatial')
+			offsetD = D*str2double(getAttribute(v.setname, 'd'));
+			h = plot(section + offsetD, scale, style, 'color', cmap(i,:));
+			j = plot([offsetD offsetD],[lowerLimit upperLimit],':', 'color', cmap(i,:));
+			set(h,'LineWidth',1.5);
+			set(j,'Parent',hGroup);
+			set(h,'Parent',hGroup);
+		else
+			err = MException('crossplot:plotTypeUnknown', ['The format ' format ' is not valid.']);
+			throw(err);			
+		end
+
+		set(get(get(hGroup,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); 
 		legends{i} = label;
 	end
-
+	
+	if strcmp(format,'spatial')
+		ticks = 0:D:xPlotRange(2);
+		set(gca,'XTick',ticks)
+		set(gca,'XTickLabel',ticks/D)
+	end
 	legend(legends);
 end
