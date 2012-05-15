@@ -1,4 +1,4 @@
-function [ scale offset units ] = getScale( attributes, axis)
+function [ scale offset units name ] = getScale( attributes, axis)
 %	Get scale, offset and units from the attributes metadata of an im7 file.
 %	Version: 0.1
 %	Author: Ben Falconer
@@ -12,11 +12,12 @@ function [ scale offset units ] = getScale( attributes, axis)
 %		'I': 
 %		'W': Values for the w matrix
 
-	matches = regexp(attributes,strcat('_SCALE_',axis,'=(?<scale>[-\d\.]*);(?<offset>[-\d\.]*);(?<units>[^;]*)'),'names');
+	matches = regexp(attributes,strcat('_SCALE_',axis,'=(?<scale>[-\d\.]*);(?<offset>[-\d\.]*);(?<units>[^;]*);(?<name>[^ ]*?);\s'),'names');
 	if size(matches) > 0
 		scale = str2double(char(matches.scale));
 		offset = str2double(char(matches.offset));
 		units = char(matches.units);
+		name = regexprep(matches.name, ';', ' ');
 	else
 		err = MException('getScale:noScaleFactor', ['No matches for ' axis ' were found in the given attributes']);
 		throw(err);

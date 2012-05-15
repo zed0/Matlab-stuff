@@ -63,12 +63,11 @@ function im2ppt(filebase, template, padding, introtext)
 
 	%make a vector of up to 4 figures and then add all the figures to a
 	%Powerpoint slide:
-	saveppt2('ppt',ppt,'figure',figs,'resolution',600,'padding',padding)
 	figs = [];
 	close all;
 
 	for i=1:max
-		fname = strcat(filebase,'\B000',sprintf('%02d',i),'*')
+		fname = [filebase '\B' sprintf('%05d', i) '*.im7'];
 		v = loadvec(fname);
 		%use the I scaling factor if it applies to the current image:
 		try
@@ -76,9 +75,70 @@ function im2ppt(filebase, template, padding, introtext)
 			v.w = v.w*scaleI;
 		catch err
 		end
+		
 		%output the plot to a figure
-		a = figure();
-		showf(v,'cmap','jet');
+		a = figure();		
+		
+		%Traverse baseline: 272mm
+		travBase = 272;
+		[scaleY] = getScale(v.Attributes, 'Y');
+		travY = (str2double(getAttribute(v.setname, 'y')) - travBase)/scaleY;
+		translate = [1 0 0; 0 1 0; 0 travY 1];
+		transform = maketform('affine',translate);
+		v.w = imtransform(v.w, transform,'XData',[1, size(v.w,2)],'YData',[1 size(v.w,1)]);
+		switch i
+			case 1
+				colorRange = [-50 50];
+			case 2
+				colorRange = [-50 50];
+			case 3
+				colorRange = [0 300];
+			case 4
+				colorRange = [0 300];
+			case 5
+				colorRange = [0 50000];
+			case 6
+				colorRange = [0 75];
+			case 7
+				colorRange = [0 75];
+			case 8
+				colorRange = [0 75];
+			case 9
+				colorRange = [0 75];
+			case 10
+				colorRange = [0 4000];
+			case 11
+				colorRange = [0 750];
+			case 12
+				colorRange = [0 4000];
+			case 13
+				colorRange = [0 750];
+			case 14
+				colorRange = [0 10000];
+			case 15
+				colorRange = [0 4000];
+			case 16
+				colorRange = [0 4000];
+			case 17
+				colorRange = [0 2000];
+			otherwise
+				colorRange = [];
+		end
+		
+		imagesc(v.x, v.y, v.w',colorRange);		
+		set(gca,'YDir','normal');
+		c = colorbar;
+		t = title(['Testpoint ', getAttribute(v.setname, 'tp'), ', ', getAttribute(v.setname, 'd'), 'D']);
+		xl = xlabel([v.namex ' (' v.unitx ')']);
+		yl = ylabel([v.namey ' (' v.unity ')']);
+		[ ~, ~, ~, v.namew ] = getScale(v.Attributes, 'I');
+		cl = ylabel(c,[v.namew ' (' v.unitw ')']);
+		set(t, 'FontSize', 20);
+		set(xl, 'FontSize', 15);
+		set(yl, 'FontSize', 15);
+		set(cl, 'FontSize', 15);
+		set(gca,'FontSize',12);
+
 		%make a vector of up to 4 figures and then add all the figures to a
 		%Powerpoint slide:
 		figs = [figs a];

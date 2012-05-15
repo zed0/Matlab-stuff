@@ -1,4 +1,4 @@
-function pptVelocityComparison(folders, outputFile, fileNumber, template, padding, introtext)
+function pptVelocityComparison(folders, outputFile, fileNumber, template, padding, scale, introtext)
 %	IM7 to .ppt converter.
 %	Version: 0.2
 %	Author: Ben Falconer
@@ -17,7 +17,7 @@ function pptVelocityComparison(folders, outputFile, fileNumber, template, paddin
 	if nargin < 5
 		padding = 0;
 	end
-	if nargin < 6
+	if nargin < 7
 		introtext = '';
 	end
 	fileRegex = ['B' sprintf('%05d', fileNumber) '*.im7'];
@@ -63,7 +63,7 @@ function pptVelocityComparison(folders, outputFile, fileNumber, template, paddin
 	maxRows = size(folderTestPoints,2);
 	i = 1;
 	while i <= size(folderNames,2)
-		figs = zeros(maxCols,maxRows);
+		figs = zeros(maxRows,maxCols);
 		for col=1:maxCols
 			for row=1:maxRows
 				a = figure();
@@ -85,14 +85,19 @@ function pptVelocityComparison(folders, outputFile, fileNumber, template, paddin
 					translate = [1 0 0; 0 1 0; 0 travY 1];
 					transform = maketform('affine',translate);
 					v.w = imtransform(v.w, transform,'XData',[1, size(v.w,2)],'YData',[1 size(v.w,1)]);
-					imagesc(v.x, v.y, v.w',[50 300]);
+					imagesc(v.x, v.y, v.w',scale);
 					set(gca,'YDir','normal');
 					c = colorbar;
 					t = title(['Testpoint ', folderTestPoints{row}, ', ', getAttribute(folderNames{i}, 'd'), 'D']);
-					xlabel([v.namex ' (' v.unitx ')']);
-					ylabel([v.namey ' (' v.unity ')']);
-					ylabel(c,[v.namew ' (' v.unitw ')']);
+					xl = xlabel([v.namex ' (' v.unitx ')']);
+					yl = ylabel([v.namey ' (' v.unity ')']);
+					[ ~, ~, ~, v.namew ] = getScale(v.Attributes, 'I');
+					cl = ylabel(c,[v.namew ' (' v.unitw ')']);
 					set(t, 'FontSize', 20);
+					set(xl, 'FontSize', 15);
+					set(yl, 'FontSize', 15);
+					set(cl, 'FontSize', 15);
+					set(gca,'FontSize',12);
  					disp(char(folderNames(i)));
 					i = i+1;
 				end
@@ -100,7 +105,7 @@ function pptVelocityComparison(folders, outputFile, fileNumber, template, paddin
 			end
 		end
 		figs = reshape(figs,1,maxRows*maxCols);
-		saveppt2('ppt',ppt,'figure',figs','col', maxCols, 'resolution',600,'padding',padding)
+		saveppt2('ppt',ppt,'figure',figs','col', maxRows, 'resolution',600,'padding',padding,'stretch',false)
 		close all;
 	end
 	saveppt2(pptname,'ppt',ppt,'close');

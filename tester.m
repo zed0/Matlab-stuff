@@ -14,32 +14,30 @@
 % 	' the Symphony PIV Test.'...
 % ];
 % im2ppt('17May3CUp-TP4-0.1Dy322-3c5mus', 'template.potx', [0, 0, 0, 60],text)
-% 
+% folderList2=dir('*us');
+% folders2={folderList2.name}.'
+% for i=1:size(folders2,1)
+% 	im2ppt(folders2{i}, '', [0, 0, 0, 0],'')
+% end
+% im2ppt('29Sept3C-TP7-1.5Dy212-3c12mus', '', [0, 0, 0, 0],'')
 
 % Cross Plotting:
 % folderList2=dir('*us');
 % folders2={folderList2.name}.'
-% crossplot(folders2,'normal',3);
-% figure
-% crossplot(folders2,'spatial',3);
-% 
 % folders2={
-% %    '7Oct3C-TP12-0.5Dy212-3c12mus';
-%     '7Oct3C-TP12-1.5Dy212-3c12mus';
-%     '7Oct3C-TP12-12Dy192-3c17mus';
-%     '7Oct3C-TP12-15Dy192-3c17mus';
-%     '7Oct3C-TP12-1Dy212-3c12mus';
-%     '7Oct3C-TP12-2.85Dy212-3c12mus';
-%     '7Oct3C-TP12-2Dy212-3c12mus';
-%     '7Oct3C-TP12-3.5Dy242-3c12mus';
-%     '7Oct3C-TP12-3Dy242-3c12mus';
-%     '7Oct3C-TP12-4Dy242-3c12mus';
-%     '7Oct3C-TP12-6Dy242-3c12mus';
-%     '7Oct3C-TP12-8Dy242-3c15mus';
+% 	'17May3CUp-TP4-0.1Dy322-3c5mus';
 % }
-% crossplot(folders2,'normal',3);
-% figure
-% crossplot(folders2,'spatial',3);
+% testPoint = 'TP4';
+% fileBase = 'C:\Users\zed0\Documents\MATLAB\Output\Optitech-TP4\';
+% t = figure('Units','normalized','Position',[0 0 1 1]);
+% crossplot(folders2,'normal',4);
+% saveas(t,[fileBase testPoint '_normal'],'fig');
+% saveas(t,[fileBase testPoint '_normal'],'png');
+% t = figure('Units','normalized','Position',[0 0 1 1]);
+% crossplot(folders2,'spatial',4);
+% saveas(t,[fileBase testPoint '_spatial'],'fig');
+% saveas(t,[fileBase testPoint '_spatial'],'png');
+% close all;
 
 %% Image Stitching:
 % folders={
@@ -73,8 +71,53 @@ folders2={
 	'Symphony-TP1B';
 	'Symphony-TP1C';
 }
-pptVelocityComparison(folders2, 'velocityPlots', 4, '', [0, 0, 0, 0]);
-% lowerLimit =
-%  -252.2330
-% upperLimit =
-%   353.4682
+pptVelocityComparison(folders2, 'TurbKEPlots_1A_1B_1C', 10, '', [0, 0, 0, 0], [0 3000]);
+
+%% im73Dplot
+% folders2 = {
+%     %'30Sept3C-TP1A-1.5Dy212-3c14mus';
+%     %'30Sept3C-TP1A-12Dy192-3c19mus';
+%     %'30Sept3C-TP1A-15Dy192-3c19mus';
+%     '30Sept3C-TP1A-1Dy212-3c14mus';
+%     %'30Sept3C-TP1A-2.85Dy212-3c14mus';
+%     '30Sept3C-TP1A-2Dy212-3c14mus';
+%     %'30Sept3C-TP1A-3.5Dy242-3c14mus';
+%     '30Sept3C-TP1A-3Dy242-3c14mus';
+%     '30Sept3C-TP1A-4Dy242-3c14mus';
+%     '30Sept3C-TP1A-6Dy242-3c14mus';
+%     '30Sept3C-TP1A-8Dy242-3c17mus';
+% }
+% folderList2=dir('*us');
+% folders2={folderList2.name}.'
+% im73Dplot(folders2);
+
+
+%% Reference plot
+% hold off;
+% D = 157.43;
+% [V,F] = readObj('Symphony23.obj');
+% V(:,1) = V(:,1)-2;
+% V(:,2) = V(:,2).*-1;
+% V(:,3) = V(:,3).*-1;
+% V(:,3) = V(:,3)-2.75;
+% 
+% trisurf(F,V(:,1),V(:,2),V(:,3),'FaceColor',[0.5,0.5,0.5 ],'EdgeColor','none');
+% light('Position',[-1.0,-1.0,100.0],'Style','infinite');
+% lighting phong;
+% axis equal;
+% xl = xlabel('x (D)');
+% yl = ylabel('z (m)');
+% zl = zlabel('y (m)');
+% set(gca,'FontSize',12);
+% set(xl,'FontSize',15);
+% set(yl,'FontSize',15);
+% set(zl,'FontSize',15);
+% axis([-1 2 -1 1 -1 1]);
+% xPlotRange = [-1 2];
+% ticks = -6*(D/1000):(D/1000):xPlotRange(2);
+% set(gca,'XTick',ticks)
+% set(gca,'XTickLabel',ticks/(D/1000))
+% hold on;
+% plot3([-1 2],[0 0],[0 0],'Color', 'blue', 'LineWidth', 2);
+% plot3([0 0],[-1 1],[0 0],'Color', 'red', 'LineWidth', 2);
+% plot3([0 0],[0 0],[-1 1],'Color', 'green', 'LineWidth', 2);

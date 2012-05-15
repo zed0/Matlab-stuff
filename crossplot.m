@@ -48,7 +48,8 @@ function crossplot(foldername, format, filenumber)
 		%Plot the cross section
 
 		%Central point seems to be 35mm
-		cutPoint = 35;
+%		cutPoint = 35; %For Symphony
+ 		cutPoint = 697; %For Optitech
 		
 		%Traverse baseline: 272mm
 		travBase = 272;
@@ -68,23 +69,26 @@ function crossplot(foldername, format, filenumber)
 
 		if i == 1
 			hold all;
-			title(['Test point ' getAttribute(v.setname, 'tp') ', ' getAttribute(v.setname, 'day') getAttribute(v.setname, 'month')]);
+			t = title(['Test point ' getAttribute(v.setname, 'tp') ', ' getAttribute(v.setname, 'day') getAttribute(v.setname, 'month')]);
+			set(t, 'FontSize', 20);
 			[ ~,~,unitsY ] = getScale(v.Attributes, 'Y');
 			[ ~,~,unitsI ] = getScale(v.Attributes, 'I');
 			if strcmp(format,'normal')
-				axis([-150 200 50 300]);
-				ylabel(unitsI);
-				xlabel(unitsY);
+				axis([-150 200 0 400]);
+				yl = ylabel(unitsI);
+				xl = xlabel(unitsY);
 			elseif strcmp(format,'spatial')
-				xPlotRange = [0 2200];
+				xPlotRange = [0 2800];
 				yPlotRange = [-150 300];
-				ylabel(unitsY);
-				xlabel('D');
+				yl = ylabel(unitsY);
+				xl = xlabel('D');
 				axis([xPlotRange, yPlotRange]);
 			else
 				err = MException('crossplot:plotTypeUnknown', ['The format ' format ' is not valid.']);
 				throw(err);
-			end
+			end	
+			set(xl, 'FontSize', 15);
+			set(yl, 'FontSize', 15);
 		end
 		
 		section = medfilt1(section,7);
@@ -107,7 +111,7 @@ function crossplot(foldername, format, filenumber)
 			throw(err);			
 		end
 
-		set(get(get(hGroup,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); 
+		set(get(get(hGroup,'Annotation'),'LegendInformation'),'IconDisplayStyle','on');
 		legends{i} = label;
 	end
 	
@@ -115,6 +119,7 @@ function crossplot(foldername, format, filenumber)
 		ticks = 0:D:xPlotRange(2);
 		set(gca,'XTick',ticks)
 		set(gca,'XTickLabel',ticks/D)
+		set(gca,'FontSize',12);
 	end
 	legend(legends);
 end
