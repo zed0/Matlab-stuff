@@ -3,6 +3,7 @@ function [ output_args ] = im73Dplot(foldername, fileNumber)
 %	Version: 0.2
 %	Author: Ben Falconer
 %	Synatx:
+run('symphonySettings');
 
 	if nargin < 3
 		fileNumber = 4;
@@ -38,9 +39,8 @@ function [ output_args ] = im73Dplot(foldername, fileNumber)
 		end
 
 		%Traverse baseline: 272mm
-		travBase = 272;
 		[scaleY] = getScale(v.Attributes, 'Y');
-		travY = (str2double(getAttribute(v.setname, 'y')) - travBase)/scaleY;
+		travY = (str2double(getAttribute(v.setname, 'y')) - travYBase)/scaleY;
 		translate = [1 0 0; 0 1 0; 0 travY 1];
 		transform = maketform('affine',translate);
 		v.w = imtransform(v.w, transform,'XData',[1, size(v.w,2)],'YData',[1 size(v.w,1)]);

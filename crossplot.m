@@ -6,8 +6,8 @@ function crossplot(foldername, format, filenumber)
 % 		folderList2=dir('*3CUp-TP4*us');
 % 		folders2={folderList2.name}.'
 % 		result = crossplot(folders2);
+	run('symphonySettings');
 
-	D = 157.43;
 	if(nargin < 2)
 		format = 'normal';
 	end
@@ -48,15 +48,14 @@ function crossplot(foldername, format, filenumber)
 		%Plot the cross section
 
 		%Central point seems to be 35mm
-%		cutPoint = 35; %For Symphony
- 		cutPoint = 697; %For Optitech
-		
-		%Traverse baseline: 272mm
-		travBase = 272;
+		%Cut Point is 0:
+		cutPoint = 35; %For Symphony
+%  		cutPoint = 697; %For Optitech
 
-		cutPoint = round(abs((cutPoint + offsetX) / scaleX)); %convert cut point to our axes
+		%cutPoint = getRelativeZero(v);
+		cutPoint = round(abs((cutPoint + offsetY) / scaleY)); %convert cut point to our axes
 		section = v.w(cutPoint,:);
-		travY = -(str2double(getAttribute(v.setname, 'y')) - travBase);
+		travY = -(str2double(getAttribute(v.setname, 'y')) - travZBase);
 		if i<8
 			style = '-';
 		elseif i<15
@@ -91,7 +90,7 @@ function crossplot(foldername, format, filenumber)
 			set(yl, 'FontSize', 15);
 		end
 		
-		section = medfilt1(section,7);
+% 		section = medfilt1(section,7);
 		hGroup = hggroup;
 		label = char(strcat(getAttribute(v.setname, 'd'),'D'));
 

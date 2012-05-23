@@ -1,4 +1,4 @@
-function rename( filelist )
+function rename(filelist)
 %	Rename files to be in the standardised format.
 %	Version: 0.1
 %	Author: Ben Falconer
@@ -53,10 +53,13 @@ function rename( filelist )
 
 	for i=1:size(filelist)
 		filename = char(filelist(i));
+		%check whether the filenames are already valid:
 		matches = regexp(filename, validPattern, 'names');
 		if ~isempty(matches)
 			fprintf('Acceptable: %s\n',filename);
 		else
+			%If the files aren't in an acceptable format then report and
+			%match them agains other known formats:
 			fprintf('Broken: %s\n',filename);
 			for j=1:size(patterns,2)
 				matches = regexp(filename, patterns{j}, 'names');
@@ -65,7 +68,8 @@ function rename( filelist )
 				end
 			end
 			if ~isempty(matches)
-
+				%If we have found a known format then we will rename it so
+				%that it matches the standardised format:
 				newName = [matches.day matches.month matches.type '-TP' matches.tp '-' matches.d 'Dy' matches.y '-' matches.threec matches.twoc matches.delay matches.x matches.set];
 				fprintf('Fixed: %s\n', newName);
 				movefile(filename, newName);

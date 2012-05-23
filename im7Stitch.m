@@ -9,8 +9,8 @@ function [target] = im7Stitch(foldername, filenumber)
 %			'17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm';
 %		}
 %		result = im7Stitch(folders);
+run('symphonySettings');
 
-	D = 157.43;
 	if(nargin < 2)
 		filenumber = 4;
 	end
@@ -38,7 +38,7 @@ function [target] = im7Stitch(foldername, filenumber)
 
  		v.w = v.w*scaleI;
 
-		posX = 720 - str2double(getAttribute(v.setname, 'x'));
+		posX = dantecBase - str2double(getAttribute(v.setname, 'x'));
 
 		Distance = D*str2double(getAttribute(v.setname, 'd'));
 

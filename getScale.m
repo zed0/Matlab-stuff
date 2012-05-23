@@ -12,13 +12,16 @@ function [ scale offset units name ] = getScale( attributes, axis)
 %		'I': 
 %		'W': Values for the w matrix
 
+%regex to match the attributes string
 	matches = regexp(attributes,strcat('_SCALE_',axis,'=(?<scale>[-\d\.]*);(?<offset>[-\d\.]*);(?<units>[^;]*);(?<name>[^ ]*?);\s'),'names');
 	if size(matches) > 0
+		%if we have a match then return the values we found
 		scale = str2double(char(matches.scale));
 		offset = str2double(char(matches.offset));
 		units = char(matches.units);
 		name = regexprep(matches.name, ';', ' ');
 	else
+		%if we can't find a match then error:
 		err = MException('getScale:noScaleFactor', ['No matches for ' axis ' were found in the given attributes']);
 		throw(err);
 	end

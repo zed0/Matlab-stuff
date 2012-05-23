@@ -8,6 +8,8 @@ function pptVelocityComparison(folders, outputFile, fileNumber, template, paddin
 %using a template as it allows definition of padding at the bottom
 %padding = [left, right, top, bottom]
 
+	run('symphonySettings');
+
 	if nargin < 3
 		fileNumber = 4;
 	end
@@ -78,10 +80,9 @@ function pptVelocityComparison(folders, outputFile, fileNumber, template, paddin
 						v.w = v.w*scaleI;
 					catch err
 					end
-					%Traverse baseline: 272mm
-					travBase = 272;
+
 					[scaleY] = getScale(v.Attributes, 'Y');
-					travY = (str2double(getAttribute(folderNames{i}, 'y')) - travBase)/scaleY;
+					travY = (str2double(getAttribute(folderNames{i}, 'y')) - travYBase)/scaleY;
 					translate = [1 0 0; 0 1 0; 0 travY 1];
 					transform = maketform('affine',translate);
 					v.w = imtransform(v.w, transform,'XData',[1, size(v.w,2)],'YData',[1 size(v.w,1)]);

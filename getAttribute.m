@@ -32,10 +32,13 @@ p10 = '(?:X)?(?<x>\d+)?(?:mm)?$';
 
 pattern = [p1 p2 p3 p4 p5 p6 p7 p8 p9 p10];
 
+%match the above pattern in the setname:
 matches = regexp(setname, pattern, 'names');
 	if size(matches) > 0
+		%return the requested match:
 		value = char(matches.(attribute));
 	else
+		%if there are no matches then error:
 		err = MException('getAttribute:noAttribute', ['No value for ' attribute ' is given in the metadata for this file']);
 		throw(err);
 	end

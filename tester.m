@@ -19,9 +19,9 @@
 % for i=1:size(folders2,1)
 % 	im2ppt(folders2{i}, '', [0, 0, 0, 0],'')
 % end
-% im2ppt('29Sept3C-TP7-1.5Dy212-3c12mus', '', [0, 0, 0, 0],'')
+im72ppt('29Sept3C-TP7-1.5Dy212-3c12mus', '', [0, 0, 0, 0],'')
 
-% Cross Plotting:
+%% Cross Plotting:
 % folderList2=dir('*us');
 % folders2={folderList2.name}.'
 % folders2={
@@ -66,12 +66,12 @@
 % rename(folders2);
 
 %% pptVelocityComparison
-folders2={
-	'Symphony-TP1A';
-	'Symphony-TP1B';
-	'Symphony-TP1C';
-}
-pptVelocityComparison(folders2, 'TurbKEPlots_1A_1B_1C', 10, '', [0, 0, 0, 0], [0 3000]);
+% folders2={
+% 	'Symphony-TP1A';
+% 	'Symphony-TP1B';
+% 	'Symphony-TP1C';
+% }
+% pptVelocityComparison(folders2, 'TurbKEPlots_1A_1B_1C', 10, '', [0, 0, 0, 0], [0 3000]);
 
 %% im73Dplot
 % folders2 = {
@@ -93,31 +93,4 @@ pptVelocityComparison(folders2, 'TurbKEPlots_1A_1B_1C', 10, '', [0, 0, 0, 0], [0
 
 
 %% Reference plot
-% hold off;
-% D = 157.43;
-% [V,F] = readObj('Symphony23.obj');
-% V(:,1) = V(:,1)-2;
-% V(:,2) = V(:,2).*-1;
-% V(:,3) = V(:,3).*-1;
-% V(:,3) = V(:,3)-2.75;
-% 
-% trisurf(F,V(:,1),V(:,2),V(:,3),'FaceColor',[0.5,0.5,0.5 ],'EdgeColor','none');
-% light('Position',[-1.0,-1.0,100.0],'Style','infinite');
-% lighting phong;
-% axis equal;
-% xl = xlabel('x (D)');
-% yl = ylabel('z (m)');
-% zl = zlabel('y (m)');
-% set(gca,'FontSize',12);
-% set(xl,'FontSize',15);
-% set(yl,'FontSize',15);
-% set(zl,'FontSize',15);
-% axis([-1 2 -1 1 -1 1]);
-% xPlotRange = [-1 2];
-% ticks = -6*(D/1000):(D/1000):xPlotRange(2);
-% set(gca,'XTick',ticks)
-% set(gca,'XTickLabel',ticks/(D/1000))
-% hold on;
-% plot3([-1 2],[0 0],[0 0],'Color', 'blue', 'LineWidth', 2);
-% plot3([0 0],[-1 1],[0 0],'Color', 'red', 'LineWidth', 2);
-% plot3([0 0],[0 0],[-1 1],'Color', 'green', 'LineWidth', 2);
+% drawWingModel()
