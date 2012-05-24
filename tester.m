@@ -61,7 +61,7 @@ folders2={
 	'Optitheck-TP5';
 	'Optitheck-TP6';
 }
-pptPropertyComparison(folders2, 'VelocityPlots_4_5_6', 4);
+pptPropertyComparison(folders2, 'TurbKE_4_5_6', 10);
 
 %% im73Dplot
 % folders2 = {
