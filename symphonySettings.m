@@ -1,16 +1,47 @@
-%D Value
-D = 157.43;
+%Set this according to which test we are currently looking at, options are
+%'optitheck', 'symphony', 'siloet'
+test = 'optitheck';
+if strcmp(test, 'optitheck')
+%% Optitech Settings
+	%D Value
+	D = 157.43;
+	
+	%Limits to plot between:
+	xPlotLimits = [-200 300];
+	yPlotLimits = [-300 210];
+	
+	%Constant offsets between the target and nozzle in mm
+	%Upstream:
+	upTargetOffsetX = 0;
+	upTargetOffsetY = -10;
+	upTargetOffsetZ = -39;
+	%Downstream:
+	dwnTargetOffsetX = 0;
+	dwnTargetOffsetY = -10;
+	dwnTargetOffsetZ = 30;
 
+elseif strcmp(test, 'siloet')
+
+elseif strcmp(test, 'symphony')
+%% Symphony Settings
+	%D Value
+	D = 185.7;
+	xPlotLimits = [-350 250];
+	yPlotLimits = [-300 210];
+	
+	%Constant offsets between the target and nozzle in mm
+	%Upstream:
+	upTargetOffsetX = 0;
+	upTargetOffsetY = 20;
+	upTargetOffsetZ = -32;
+end
+
+%% Common Settings:
 %Qinetiq Z Traverse baseline: 302mm
 travZBase = 272;
 
 %Dantec Traverse Baseline: 720mm
 dantecBase = 720;
-
-%Constant offsets between the target and nozzle in mm
-targetOffsetX = 0;
-targetOffsetY = 20;
-targetOffsetZ = -32;
 
 %Number of files for each measurement:
 numFiles = 17;

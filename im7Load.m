@@ -34,7 +34,7 @@ function [ v ] = im7Load( filename )
 		v = changefieldf(v,'namey','y');
 
 		%translate the plot so that our 0 agrees with their 0:
-		v = setoriginf(v, [targetOffsetZ, targetOffsetY]);
+		v = setoriginf(v, [upTargetOffsetZ, upTargetOffsetY]);
 		
 		%offset aditionally for the traverse base position:
 		v = setoriginf(v, [-travZBase, 0]);
@@ -45,6 +45,22 @@ function [ v ] = im7Load( filename )
 		v.x = v.x .* -1;
 	elseif strcmp(type,'3CDwn')
 		%3C Downstream Adjustments:
+		%rename the axes to agree with ours:
+		v = changefieldf(v,'namex','z');
+		v = changefieldf(v,'namey','y');
+
+		%translate the plot so that our 0 agrees with their 0:
+		v = setoriginf(v, [dwnTargetOffsetZ, dwnTargetOffsetY]);
+		
+		%offset aditionally for the traverse base position:
+		v = setoriginf(v, [travZBase, 0]);
+		%and offset for the current traverse position:
+		v = setoriginf(v, [-str2double(getAttribute(v.setname, 'y')), 0]);
+%%%%%
+% IS THIS CORRECT!?
+%%%%%
+		%flip the Z axis:
+		%v.x = v.x .* -1;
 	end
 end
 

@@ -18,8 +18,8 @@ function pptPropertyComparison(folders, outputFile, fileNumber)
 	folderFullNames = {};
 	folderNames = {};
 	for i=1:size(folders)
-		%find all sub files of each folder given:
-		subfolders = dir(strcat(folders{i},'/*'));
+		%find all 3C sub files of each folder given:
+		subfolders = dir(strcat(folders{i},'/*mus'));
 		for j=1:size(subfolders)
 			%loop through the files and if they are folders then add them:
 			if subfolders(j).isdir && ...
@@ -53,8 +53,7 @@ function pptPropertyComparison(folders, outputFile, fileNumber)
 	%Create an array to push figures to:
 	figs = zeros(size(formatMatrix));
 
-	%We have to be careful about the order of our figures, plotting in sets
-	%of 3x[number of test points] is reasonable.
+	%plotting in sets of 3x[number of test points] is reasonable.
 	maxCols = size(folderTestPoints,1);
 	maxRows = 3;
 
@@ -71,6 +70,9 @@ function pptPropertyComparison(folders, outputFile, fileNumber)
 				a = figure();
 				set(a,'visible','off'); %prevent all the figures popping up
 
+				%recentre the image so that they all line up:
+				v = recentreImage(v, xPlotLimits, yPlotLimits);
+
 				%Plot to the figure:
 				showf(v);
 				%Set the formatting for the Plot to our standard settings:
@@ -78,7 +80,7 @@ function pptPropertyComparison(folders, outputFile, fileNumber)
 				set(a,'visible','off');	%showf makes the figures pop up again, this surpresses it.
 				figs(row,col) = a;
 			else
-				disp(['No data for ' char(folderTestPoints(col)) ', ' char(folderDPoints(row)) 'D']);
+				disp(['No data for TP' char(folderTestPoints(col)) ', ' char(folderDPoints(row)) 'D']);
 			end
 		end
 	end

@@ -54,11 +54,14 @@
 
 %% pptVelocityComparison
 folders2={
-	'Symphony-TP1A';
-	'Symphony-TP1B';
-	'Symphony-TP1C';
+% 	'Symphony-TP1A';
+% 	'Symphony-TP1B';
+% 	'Symphony-TP1C';
+	'Optitheck-TP4';
+	'Optitheck-TP5';
+	'Optitheck-TP6';
 }
-pptPropertyComparison(folders2, 'TurbKEPlots_1A_1B_1C', 10);
+pptPropertyComparison(folders2, 'VelocityPlots_4_5_6', 4);
 
 %% im73Dplot
 % folders2 = {

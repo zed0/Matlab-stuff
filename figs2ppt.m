@@ -19,7 +19,7 @@ function [ ppt ] = figs2ppt(filename, figures, layout)
 	for i=1:figsPerSlide:size(figures,1)
 		%get a sub array of figures for each slide and pad it with zeros to
 		%make it up to the required size:
-		numFigs = min([figsPerSlide size(figures,1)-i]);
+		numFigs = min([figsPerSlide size(figures,1)-i+1]);
 		currentFigs = zeros(figsPerSlide,1);
 		currentFigs(1:numFigs) = figures(i:i+numFigs-1);
 
