@@ -1,25 +1,12 @@
 %% Tester script
 %% Presentation creation:
-% text = [...
-% 	'Symphony PIV Test as performed by\n'...
-% 	'Warwick University\n'...
-% 	'Warwick PIV Team\n'...
-% 	'	Prof P.J.Bryanston-Cross\n'...
-% 	'	Dr B.H Timmerman\n'...
-% 	'	B.Falconer\n'...
-% 	'	P.Hackett & Ian Baylis\n'...
-% 	'	T.Gibbs\n\n\n'...
-% 	'The following sequence of images presents a representation' ...
-% 	' of the results obtained by the Warwick PIV team during'...
-% 	' the Symphony PIV Test.'...
-% ];
 % im2ppt('17May3CUp-TP4-0.1Dy322-3c5mus', 'template.potx', [0, 0, 0, 60],text)
 % folderList2=dir('*us');
 % folders2={folderList2.name}.'
 % for i=1:size(folders2,1)
-% 	im2ppt(folders2{i}, '', [0, 0, 0, 0],'')
+% 	im2ppt(folders2{i})
 % end
-im72ppt('29Sept3C-TP7-1.5Dy212-3c12mus', '', [0, 0, 0, 0],'')
+% im72ppt('29Sept3C-TP7-1.5Dy212-3c12mus')
 
 %% Cross Plotting:
 % folderList2=dir('*us');
@@ -66,12 +53,12 @@ im72ppt('29Sept3C-TP7-1.5Dy212-3c12mus', '', [0, 0, 0, 0],'')
 % rename(folders2);
 
 %% pptVelocityComparison
-% folders2={
-% 	'Symphony-TP1A';
-% 	'Symphony-TP1B';
-% 	'Symphony-TP1C';
-% }
-% pptVelocityComparison(folders2, 'TurbKEPlots_1A_1B_1C', 10, '', [0, 0, 0, 0], [0 3000]);
+folders2={
+	'Symphony-TP1A';
+	'Symphony-TP1B';
+	'Symphony-TP1C';
+}
+pptPropertyComparison(folders2, 'TurbKEPlots_1A_1B_1C', 10);
 
 %% im73Dplot
 % folders2 = {

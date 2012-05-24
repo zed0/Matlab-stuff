@@ -14,7 +14,6 @@ function im72ppt(filebase)
 
 	%Create a vector to hold our figures:
 	figs = zeros(max,1);
-	close all;
 
 	for i=1:max
 		%Choose the file for this itteration:
@@ -25,15 +24,21 @@ function im72ppt(filebase)
 
 		%Create a figure for our output:
 		a = figure();
-		set(a,'Visible','off'); %prevent all the figures popping up
+		set(a,'visible','off'); %prevent all the figures popping up
 
 		%Plot to the figure:
 		%(colorLimits(...) gets the colour limits from the settings file)
-		showf(v, 'CLim', colorLimits(getIndex(v.name),:));
+		showf(v);
+		%Set the formatting for the Plot to our standard settings:
 		setPlotFormatting(v);
+
+		set(a,'visible','off'); %showf makes the figures pop up again, this surpresses it.
 		figs(i) = a;
 	end
 
 	%convert our matrix of figures into a powerpoint presentation:
 	figs2ppt([filebase '.ppt'], figs, [3 2]);
+	
+	%Free up the figures we were using:
+	closeFigs(figs);
 end

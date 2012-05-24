@@ -1,9 +1,13 @@
 function setPlotFormatting(v)
 %SETPLOTFORMATTING Summary of this function goes here
 %   Detailed explanation goes here
+	run('symphonySettings');
 
 	%Reverse X direction so that negative is to the right
 	set(gca,'XDir','reverse');
+
+	%(colorLimits(...) gets the colour limits from the settings file)
+	set(gca,'CLim', colorLimits(getIndex(v.name),:))
 
 	%Set title
 	t = title(['Testpoint ', getAttribute(v.setname, 'tp'), ', ', getAttribute(v.setname, 'd'), 'D']);
