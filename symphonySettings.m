@@ -1,24 +1,29 @@
 %Set this according to which test we are currently looking at, options are
 %'optitheck', 'symphony', 'siloet'
-test = 'optitheck';
+test = 'symphony';
 if strcmp(test, 'optitheck')
 %% Optitech Settings
 	%D Value
 	D = 157.43;
 	
 	%Limits to plot between:
-	xPlotLimits = [-250 250];
+	zPlotLimits = [-250 250];
+	zCrossLimits = [-150 150];
 	yPlotLimits = [-300 200];
 	
 	%Constant offsets between the target and nozzle in mm
 	%Upstream:
 	upTargetOffsetX = 0;
 	upTargetOffsetY = -10;
-	upTargetOffsetZ = -39;
+	upTargetOffsetZ = -26;
 	%Downstream:
 	dwnTargetOffsetX = 0;
 	dwnTargetOffsetY = -10;
 	dwnTargetOffsetZ = 30;
+	%2C:
+	twoCTargetOffsetX = -1382;
+	twoCTargetOffsetY = 0;
+	twoCTargetOffsetZ = 27.2;
 
 elseif strcmp(test, 'siloet')
 
@@ -26,7 +31,10 @@ elseif strcmp(test, 'symphony')
 %% Symphony Settings
 	%D Value
 	D = 185.7;
-	xPlotLimits = [-350 250];
+
+	%Limits to plot between:	
+	zPlotLimits = [-350 250];
+	zCrossLimits = [-150 150];
 	yPlotLimits = [-300 210];
 	
 	%Constant offsets between the target and nozzle in mm

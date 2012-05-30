@@ -11,7 +11,7 @@ function setPlotFormatting(v)
 
 	%Set title
 	t = title(['Testpoint ', getAttribute(v.setname, 'tp'), ', ', getAttribute(v.setname, 'd'), 'D']);
-	
+
 	%Set font size for various parts of the plot
 	set(t, 'FontSize', 20);
 	set(gca,'FontSize',12);

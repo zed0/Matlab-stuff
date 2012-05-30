@@ -71,7 +71,7 @@ function pptPropertyComparison(folders, outputFile, fileNumber)
 				set(a,'visible','off'); %prevent all the figures popping up
 
 				%recentre the image so that they all line up:
-				v = recentreImage(v, xPlotLimits, yPlotLimits);
+				v = recentreImage(v, zPlotLimits, yPlotLimits);
 
 				%Plot to the figure:
 				showf(v);

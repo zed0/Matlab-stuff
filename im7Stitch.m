@@ -14,77 +14,67 @@ run('symphonySettings');
 	if(nargin < 2)
 		filenumber = 4;
 	end
-	fileRegex = ['B' sprintf('%05d', filenumber) '*.im7'];	%pad filename witn 0's
-	target = zeros(0,0);
-	mask = zeros(size(target));
-	initialX = 0;
-	scaleX=0;
-	scaleY=0;
+
+	target = struct;
+	target.w = zeros(0,0);
+	target.name = 'Stitched Image';
+	target.setname = '';
+	target.mask = zeros(0,0);
 	for i=1:size(foldername)
-		folder = char(foldername(i));
-		filename = dir([folder '/' fileRegex]);
-		if(isempty(filename))
-			err = MException('Im7Convert:FileNotFound', ['The folder ' folder ' does not contain the file you specified.']);
-			throw(err);
-		end
-		filename = [folder '/' filename.name];
-		v = loadvec(filename);
-		
-		[ scaleI offsetI ] = getScale(v.Attributes, 'I');
-		[ scaleX offsetX ] = getScale(v.Attributes, 'X');
-		[ scaleY offsetY ] = getScale(v.Attributes, 'Y');
+		v = im7Load([foldername{i} '/B' sprintf('%05d', filenumber) '*.im7']);
 
-		disp(strcat(char(foldername(i)),'scaleI=',num2str(scaleI),'; scaleX=',num2str(scaleX),'; scaleY=',num2str(scaleY)));
 
- 		v.w = v.w*scaleI;
+		newMask = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;	%0 where v.w is 0, 1 everywhere else
+		newScaleX = getScale(v.Attributes, 'X');
+		newScaleY = getScale(v.Attributes, 'Y');
 
-		posX = dantecBase - str2double(getAttribute(v.setname, 'x'));
+		if i == 1
+			%Use the current range:
+			target.x = v.x;
+			target.y = v.y;
+			%Use the current scale:
+			target.scalex = newScaleX;
+			target.scaley = newScaleY;
+			target.namex = v.namex;
+			target.namey = v.namey;
+			target.namew = v.namew;
+			target.unitx = v.unitx;
+			target.unity = v.unity;
+			target.unitw = v.unitw;
+			target.ysign = v.ysign;
+			target.history = {['created from ' v.setname]};
 
-		Distance = D*str2double(getAttribute(v.setname, 'd'));
-
-		posX = posX - Distance;
-		posX = round(posX * scaleX);
-		
-		posY = str2double(getAttribute(v.setname, 'y'));
-		posY = -1*round(posY *2*scaleY); %For some reason there is a factor of 2 here.
-% 		yPos = -1*round(yPos *scaleY);
-
-		if(size(target)==0)
-			target = v.w;
-			mask = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;	%0 where v.w is 0, 1 everywhere else
-			initialX = posX;
-			initialY = posY;
+			%Copy our canvas:
+			target.w = v.w;
+			target.mask = newMask;
 		else
- 			currentMask = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;	%0 where v.w is 0, 1 everywhere else
-			[r2,c2] = size(v.w);
-			rangeX = 1:c2;
-			rangeY = 1:r2;
-			[r1,c1] = size(target);
-			if(posX > initialX)
-				target = [target zeros(r1, (posX-initialX)-(c1-c2))];
-				mask = [mask zeros(r1, (posX-initialX)-(c1-c2))];
-				rangeX = 1+posX-initialX:c2+posX-initialX;
-			elseif (posX < initialX)
-				target = [zeros(r1, initialX-posX) target];
-				mask = [zeros(r1, initialX-posX) mask];
-				initialX = posX;
+			if target.scalex ~= newScaleX || target.scaley ~= newScaleY
+				%If v is at a different scale we have to adjust it to the main
+				%scale
+				%%%%%%%%
+				% TODO: nothing needs this at the moment, will throw a
+				% warning if something needs to be done.
+				%%%%%%%%
+				throw(MException('im7Stitch:NotImplemented',...
+					'The im7Stitch function does not yet support using images of differing scales'));
 			end
-			[r1,c1] = size(target);
-			if(posY > initialY)
-				target = [target;zeros((posY-initialY)-(r1-r2), c1)];
-				mask = [mask;zeros((posY-initialY)-(r1-r2), c1)];
-				rangeY = 1+posY-initialY:r2+posY-initialY;
-			elseif (posY < initialY)
-				target = [zeros(initialY-posY, c1);target];
-				mask = [zeros(initialY-posY, c1);mask];
-				initialY = posY;
-			end
-			target(rangeY, rangeX) = target(rangeY, rangeX) + v.w;
-			mask(rangeY, rangeX) = mask(rangeY, rangeX) + currentMask;
+
+			%Get our new X and Y axes:
+			newX = [min(target.x(1), v.x(1)) max(target.x(end), v.x(end))];
+			newY = [min(target.y(1), v.y(1)) max(target.y(end), v.y(end))];
+
+			%Adjust the target image to accomodate the image to be
+			%stitched:
+			target = recentreImage(target,newX,newY);
+
+			%Find the range the stitched image will cover:
+			rangeX = [getCoordinateFromReal(target.x, v.x(1)):getCoordinateFromReal(target.x, v.x(1))+size(v.x,2)-1];
+			rangeY = [getCoordinateFromReal(target.y, v.y(1)):getCoordinateFromReal(target.y, v.y(1))+size(v.y,2)-1];
+
+			%Paste our new image on top:
+			target.w(rangeX, rangeY) = target.w(rangeX, rangeY) + v.w;
+			%target.mask(rangeX, rangeY) = target.mask(rangeX, rangeY) + newMask;
 		end
 	end
-	target = target ./ mask;
-	[r1,c1] = size(target);
-	imagesc([c1*scaleX 0],[r1*scaleY 0],target);
-	return;
+ 	%target.w = target.w ./ target.mask;
 end

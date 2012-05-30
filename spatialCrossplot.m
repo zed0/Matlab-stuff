@@ -1,4 +1,4 @@
-function crossplot(folderNames, filenumber)
+function spatialCrossplot(folderNames, filenumber)
 %	Cross plot function for IM7 images.
 %	Version: 0.1
 %	Author: Ben Falconer
@@ -36,15 +36,21 @@ function crossplot(folderNames, filenumber)
 
 		if i==1
 			%set our formatting if this is the first time we're running.
-			setCrossplotFormatting(v);
+			setSpatialCrossplotFormatting(v);
 		end
 
-		plot(v.x,getProfileAtCoord(v,0), ...	%Plot our x Axis points against the profile
+		total = getProfileAtCoord(v,0) + str2double(getAttribute(v.setname, 'd'))*D;
+		plot(total, v.x, ...	%Plot our x Axis points against the profile
 			'color', cmap(i,:), ...				%Use the colours we defined earlier
 			'lineStyle', styles{ceil(i/7)},...	%Use the line styles we defined earlier (7 is the period of the line colours)
 			'LineWidth',1.5);
 		legendEntries{i} = [getAttribute(v.setname, 'd') 'D'];
 	end
+	range = xlim;
+	ticks = 0:D:range(2);
+	set(gca, 'XTick', ticks);
+	set(gca,'XTickLabel', ticks/D)
+
 	%Add the legend:
 	legend(legendEntries);
 	hold off;

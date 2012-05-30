@@ -16,11 +16,8 @@ function im72ppt(filebase)
 	figs = zeros(max,1);
 
 	for i=1:max
-		%Choose the file for this itteration:
-		filename = [filebase '\B' sprintf('%05d', i) '*.im7'];
-
 		%Load the data from the file:
-		v = im7Load(filename);
+		v = im7Load([filebase '\B' sprintf('%05d', i) '*.im7']);
 
 		%Create a figure for our output:
 		a = figure();
