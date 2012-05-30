@@ -1,6 +1,6 @@
 %Set this according to which test we are currently looking at, options are
 %'optitheck', 'symphony', 'siloet'
-test = 'symphony';
+test = 'optitheck';
 if strcmp(test, 'optitheck')
 %% Optitech Settings
 	%D Value

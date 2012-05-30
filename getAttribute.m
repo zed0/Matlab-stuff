@@ -28,9 +28,10 @@ p6 = 'y(?<y>\d+)-';
 p7 = '(?:3c)?(?<threec>\d+)?(?:mus)?'; %Yes, Matlab's regexes are terrible.
 p8 = '(?:2c)?(?<twoc>\d+)?(?:mus)?';
 p9 = '(?<delay>[\d\.]+)?(?:ms)?';
-p10 = '(?:X)?(?<x>\d+)?(?:mm)?$';
+p10 = '(?:X)?(?<x>\d+)?(?:mm)?';
+p11 = '([_-].*)?';
 
-pattern = [p1 p2 p3 p4 p5 p6 p7 p8 p9 p10];
+pattern = [p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11];
 
 %match the above pattern in the setname:
 matches = regexp(setname, pattern, 'names');

@@ -14,16 +14,16 @@ folders2={folderList2.name}.'
 % folders2={
 % 	'17May3CUp-TP4-0.1Dy322-3c5mus';
 % }
-% spatialCrossplot(folders2, 4);
-% crossplot(folders2, 4);
-
-testPoint = 'TP7';
-fileBase = ['C:\Users\zed0\Documents\MATLAB\Output\Symphony-' testPoint '_crossplot'];
-t = figure('Units','normalized','Position',[0 0 1 1]);
+%spatialCrossplot(folders2, 4);
 crossplot(folders2, 4);
-saveas(t,fileBase,'fig');
-saveas(t,fileBase,'png');
-close all;
+
+% testPoint = 'TP7';
+% fileBase = ['C:\Users\zed0\Documents\MATLAB\Output\Symphony-' testPoint '_crossplot'];
+% t = figure('Units','normalized','Position',[0 0 1 1]);
+% crossplot(folders2, 4);
+% saveas(t,fileBase,'fig');
+% saveas(t,fileBase,'png');
+% close all;
 
 %% Image Stitching:
 % folders={
