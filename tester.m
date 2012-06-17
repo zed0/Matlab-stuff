@@ -37,17 +37,13 @@ result = im7Stitch(folders,3);
 % folders2={folderList2.name}.'
 % result = im7Stitch(folders2);
 
-%% Dimension scaling:
-
-% im7Convert('B00004_abs(Avg V).im7');
-
 %% Renamer script:
 
 % folderList2=dir('*');
 % folders2={folderList2.name}.'
 % rename(folders2);
 
-%% pptVelocityComparison
+%% pptPropertyComparison
 % folders2={
 % 	'Optitheck-TP4';
 % 	'Optitheck-TP5';
