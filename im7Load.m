@@ -86,7 +86,7 @@ function [ v ] = im7Load( filename )
 		v = setoriginf(v, [0, -str2double(getAttribute(v.setname, 'x'))]);
 
 		%flip the x axis:
-		%v.y = v.y .* -1;
+		v.y = v.y .* -1;
 	end
 end
 

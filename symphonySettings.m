@@ -26,6 +26,7 @@ if strcmp(test, 'optitheck')
 	twoCTargetOffsetZ = 27.2;
 
 elseif strcmp(test, 'siloet')
+%% Siloet Settings
 
 elseif strcmp(test, 'symphony')
 %% Symphony Settings

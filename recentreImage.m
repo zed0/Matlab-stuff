@@ -31,6 +31,9 @@ function [rf] = recentreImage(f,newx,newy)
 	rf.y = rangeY;
 	%adjust the w array to the new grid:
 	rf.w = griddata(xo,yo,f.w,xi,yi,'nearest');
+	if isfield(f,'mask')
+		rf.mask = griddata(xo,yo,f.mask,xi,yi,'nearest');
+	end
 	%add the process to the history:
 	rf.history = {f.history{:} ['remapf(ans, X, Y)']}';
 	%set undefined elements to zero:

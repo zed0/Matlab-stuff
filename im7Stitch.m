@@ -17,21 +17,17 @@ run('symphonySettings');
 
 	target = struct;
 	target.w = zeros(0,0);
-	target.name = 'Stitched Image';
+	target.name = ['B' sprintf('%05d', filenumber) 'Stitched Image'];
 	target.setname = '';
 	target.mask = zeros(0,0);
 	for i=1:size(foldername)
 		v = im7Load([foldername{i} '/B' sprintf('%05d', filenumber) '*.im7']);
-
 
 		newMask = (v.w == 0) .* 0 + (v.w ~= 0) .* 1;	%0 where v.w is 0, 1 everywhere else
 		newScaleX = getScale(v.Attributes, 'X');
 		newScaleY = getScale(v.Attributes, 'Y');
 
 		if i == 1
-			%Use the current range:
-			target.x = v.x;
-			target.y = v.y;
 			%Use the current scale:
 			target.scalex = newScaleX;
 			target.scaley = newScaleY;
@@ -43,8 +39,11 @@ run('symphonySettings');
 			target.unitw = v.unitw;
 			target.ysign = v.ysign;
 			target.history = {['created from ' v.setname]};
+			
+			axisX = -200:newScaleX:4000;
+			axisX = -400:newScaleY:400;
 
-			%Copy our canvas:
+			%Create our canvas:
 			target.w = v.w;
 			target.mask = newMask;
 		else
@@ -73,8 +72,8 @@ run('symphonySettings');
 
 			%Paste our new image on top:
 			target.w(rangeX, rangeY) = target.w(rangeX, rangeY) + v.w;
-			%target.mask(rangeX, rangeY) = target.mask(rangeX, rangeY) + newMask;
+			target.mask(rangeX, rangeY) = target.mask(rangeX, rangeY) + newMask;
 		end
 	end
- 	%target.w = target.w ./ target.mask;
+ 	target.w = target.w ./ target.mask;
 end
