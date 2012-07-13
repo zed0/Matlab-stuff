@@ -79,7 +79,7 @@ These do as the names suggest and each take the same input arguments:
 index = 4; %index of the property we want. (4 corresponds with Velocity on 3C plots)
 %get all the files and folders ending in 'us' in the current directory:
 folderList=dir('*us');
-folders={folderList2.name}.';
+folders={folderList.name}.';
 %create a crossplot from them:
 figure();
 crossplot(folders, index);
@@ -134,7 +134,7 @@ These are various scripts that are helpful to have but you are unlikely to need.
 Renames folders so that they adhere to the naming standard.  This works by taking the values by several known incorrect naming schemes and moving them to the correct one.
 ```matlab
 folderList=dir('*');
-folders2={folderList.name}.';
+folders={folderList.name}.';
 rename(folders);
 ```
 
