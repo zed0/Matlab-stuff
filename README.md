@@ -137,9 +137,17 @@ folderList=dir('*');
 folders={folderList.name}.';
 rename(folders);
 ```
-
 * Reference plot:
 Creates a 3D reference plot including a model of the wing and jet.
 ```matlab
+drawWingModel();
+```
+
+* 3d plot:
+Creates a 3D reference plot including a model of the wing and jet.
+```matlab
+folderList = dir('*us');
+folders = {folderList.name}.'
+im73DPlot(folders);
 drawWingModel();
 ```
