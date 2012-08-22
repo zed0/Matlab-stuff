@@ -1,8 +1,10 @@
-function [ v ] = im7Load( filename )
+function [ v ] = im7Load( filename, type)
 %GET3CPLOT Summary of this function goes here
 %   Adjust a vector to our axes and apply the various scaling factors
 %	Currently only geared for 3C shots, I will add 2C shots at a later
 %	date
+%	type will normally be automatically detected, if not you should specify
+%	it or expect incorrect results.
 
 	run('symphonySettings');
 
@@ -24,25 +26,38 @@ function [ v ] = im7Load( filename )
 
 	%Do adjustments based on which type of measurement we are taking:
 	%(i.e. 2C measurements use different axes from 3C ones)
-	type = getAttribute(v.setname, 'type');
 
+	if(nargin < 2)
+		type = getAttribute(v.setname, 'type');
+	end
 	if strcmp(type,'3C') || strcmp(type,'3CUp')
 		%3C Upstream Adjustments:
+
+		%flip the Z axis:
+		v.x = v.x .* -1;
+
+
+		s = warning('error', 'MATLAB:getAttribute:no_attrib');
+		try
+			%and offset for the current traverse position:
+			v = setoriginf(v, [str2double(getAttribute(v.setname, 'y')), 0]);
+			%offset aditionally for the traverse base position:
+			v = setoriginf(v, [-travZBase, 0]);
+
+			%translate the plot so that our 0 agrees with their 0:
+			v = setoriginf(v, [upTargetOffsetZ, upTargetOffsetY]);
+		catch error
+			if strcmp(error.identifier,'MATLAB:getAttribute:no_attrib')
+				warning('MATLAB:im7Load:no_attribs', 'Skipping translating data due to no attributes');
+			else
+				rethrow(error)
+			end
+		end
+		warning(s)
 
 		%rename the axes to agree with ours:
 		v = changefieldf(v,'namex','z');
 		v = changefieldf(v,'namey','y');
-
-		%translate the plot so that our 0 agrees with their 0:
-		v = setoriginf(v, [upTargetOffsetZ, upTargetOffsetY]);
-
-		%offset aditionally for the traverse base position:
-		v = setoriginf(v, [-travZBase, 0]);
-		%and offset for the current traverse position:
-		v = setoriginf(v, [str2double(getAttribute(v.setname, 'y')), 0]);
-
-		%flip the Z axis:
-		v.x = v.x .* -1;
 
 	elseif strcmp(type,'3CDwn')
 		%3C Downstream Adjustments:

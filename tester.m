@@ -72,25 +72,83 @@
 % pptPropertyComparison(folders2, 'TurbKE_4_5_6', 10);
 
 %% im73Dplot
-folders = {
-	'7Oct3C-TP12-1Dy212-3c12mus'
-% 	'7Oct3C-TP12-1.5Dy212-3c12mus'
-	'7Oct3C-TP12-2Dy212-3c12mus'
-% 	'7Oct3C-TP12-2.85Dy212-3c12mus'
-	'7Oct3C-TP12-3Dy242-3c12mus'     
-% 	'7Oct3C-TP12-3.5Dy242-3c12mus'
-% 	'7Oct3C-TP12-4Dy242-3c12mus'
-	'7Oct3C-TP12-6Dy242-3c12mus'     
-% 	'7Oct3C-TP12-8Dy242-3c15mus'     
-	'7Oct3C-TP12-12Dy192-3c17mus'
-	'7Oct3C-TP12-15Dy192-3c17mus'
-}
-% folderList=dir('*us');
+% folders = {
+% 	'7Oct3C-TP12-1Dy212-3c12mus'
+% % 	'7Oct3C-TP12-1.5Dy212-3c12mus'
+% 	'7Oct3C-TP12-2Dy212-3c12mus'
+% % 	'7Oct3C-TP12-2.85Dy212-3c12mus'
+% 	'7Oct3C-TP12-3Dy242-3c12mus'     
+% % 	'7Oct3C-TP12-3.5Dy242-3c12mus'
+% % 	'7Oct3C-TP12-4Dy242-3c12mus'
+% 	'7Oct3C-TP12-6Dy242-3c12mus'     
+% % 	'7Oct3C-TP12-8Dy242-3c15mus'     
+% 	'7Oct3C-TP12-12Dy192-3c17mus'
+% 	'7Oct3C-TP12-15Dy192-3c17mus'
+% }
+% % folderList=dir('*us');
 
 % folders={folderList.name}.'
-im73Dplot(folders);
-drawWingModel()
+% im73Dplot(folders);
+% drawWingModel()
 
 
 %% Reference plot
-%%drawWingModel()
+%drawWingModel()
+
+%%random bits for Peter
+t = figure;
+v = im7Load('B00004*.im7', '3C');
+cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\8x8_adaptive_abs_(Avg_V).im7','3C');
+cmp.index = 4;
+w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
+difference = operf('-',w,cmp2);
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [0 100])
+saveas(t,'absAvgVDiff8','fig');
+saveas(t,'absAvgVDiff8','tiff');
+close all;
+
+t = figure;
+v = im7Load('B00004*.im7', '3C');
+cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\16x16_adaptive_abs(Avg_V).im7','3C');
+cmp.index = 4;
+w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
+difference = operf('-',w,cmp2);
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [0 100])
+saveas(t,'absAvgVDiff16','fig');
+saveas(t,'absAvgVDiff16','tiff');
+close all;
+
+
+t = figure;
+v = im7Load('B00010*.im7', '3C');
+cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\8x8_adaptiveTKE.im7','3C');
+cmp.index = 10;
+w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
+difference = operf('-',w,cmp2);
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [0 100])
+saveas(t,'TKEDiff8','fig');
+saveas(t,'TKEDiff8','tiff');
+close all;
+
+t = figure;
+v = im7Load('B00010*.im7', '3C');
+cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\16x16_adaptiveTKE.im7','3C');
+cmp.index = 10;
+w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
+difference = operf('-',w,cmp2);
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [0 100])
+saveas(t,'TKEDiff16','fig');
+saveas(t,'TKEDiff16','tiff');
+close all

@@ -7,7 +7,7 @@ function setPlotFormatting(v)
 	set(gca,'XDir','reverse');
 
 	%(colorLimits(...) gets the colour limits from the settings file)
-	set(gca,'CLim', colorLimits(getIndex(v.name),:))
+	set(gca,'CLim', colorLimits(v.index,:))
 
 	%Set title
 	t = title(['Testpoint ', getAttribute(v.setname, 'tp'), ', ', getAttribute(v.setname, 'd'), 'D']);

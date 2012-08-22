@@ -1,6 +1,6 @@
 %Set this according to which test we are currently looking at, options are
 %'optitheck', 'symphony', 'siloet'
-test = 'optitheck';
+test = 'siloet';
 if strcmp(test, 'optitheck')
 %% Optitech Settings
 	%D Value
@@ -27,7 +27,20 @@ if strcmp(test, 'optitheck')
 
 elseif strcmp(test, 'siloet')
 %% Siloet Settings
+% CURRENTLY JUST COPIED FROM SYMPHONY
+	%D Value
+	D = 185.7;
 
+	%Limits to plot between:	
+	zPlotLimits = [-350 250];
+	zCrossLimits = [-150 150];
+	yPlotLimits = [-300 210];
+	
+	%Constant offsets between the target and nozzle in mm
+	%Upstream:
+	upTargetOffsetX = 0;
+	upTargetOffsetY = 20;
+	upTargetOffsetZ = -32;
 elseif strcmp(test, 'symphony')
 %% Symphony Settings
 	%D Value

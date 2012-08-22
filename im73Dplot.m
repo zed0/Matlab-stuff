@@ -7,8 +7,6 @@ function [ output_args ] = im73Dplot(foldername, fileNumber)
 	fileRegex = ['B' sprintf('%05d', fileNumber) '*.im7'];
 	h = axes();
 	set(h, 'CLim', colorLimits(fileNumber,:));
-%  	set(h,'CameraUpVectorMode', 'manual');
-%  	set(h,'CameraUpVector', [1 1 1]);
 	grid on;
  	hold all;
 	for i=1:size(foldername)

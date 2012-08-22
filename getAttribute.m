@@ -40,8 +40,8 @@ matches = regexp(setname, pattern, 'names');
 		value = char(matches.(attribute));
 	else
 		%if there are no matches then error:
-		err = MException('getAttribute:noAttribute', ['No value for ' attribute ' is given in the metadata for this file']);
-		throw(err);
+		warning('MATLAB:getAttribute:no_attrib', ['No value for ' attribute ' is given in the metadata for this file']);
+		value = '0';
 	end
 end
 
