@@ -151,3 +151,45 @@ folders = {folderList.name}.'
 im73DPlot(folders);
 drawWingModel();
 ```
+
+* Compare 2 plots of different sizes:
+Takes the file names for 2 plots and compares them.
+```matlab
+%%random bits for Peter
+% create a figure to plot to:
+t = figure;
+%location of files to compare:
+file1 = 'H:\23rdAugust\SilTP10-3D-16GPU-fullmask\B00004*.im7';
+file2 = 'H:\23rdAugust\SilTP10-3D-16normal-fullmask\B00004*.im7';
+%index to compare (this should match the im7 number above):
+index = 4;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'absAvgVDiff8','fig');
+saveas(t,'absAvgVDiff8','tiff');
+%close the figure:
+close all;
+```

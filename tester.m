@@ -94,61 +94,367 @@
 
 %% Reference plot
 %drawWingModel()
+base1 = 'H:\23rdAugust\SilTP10-3D-16askednorm\TimeMeanQF_Scalar';
+base2 = 'H:\23rdAugust\SilTP10-3D-8maskednorm\TimeMeanQF_Scalar';
 
 %%random bits for Peter
+% create a figure to plot to:
 t = figure;
-v = im7Load('B00004*.im7', '3C');
-cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\8x8_adaptive_abs_(Avg_V).im7','3C');
-cmp.index = 4;
-w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
-cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
-difference = operf('-',w,cmp2);
+%location of files to compare:
+file1 = [base1 '\B00001*.im7'];
+file2 = [base2 '\B00001*.im7'];
+%index to compare (this should match the im7 number above):
+index = 1;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
 showf(difference);
 setPlotFormatting(difference);
-set(gca, 'CLim', [0 100])
-saveas(t,'absAvgVDiff8','fig');
-saveas(t,'absAvgVDiff8','tiff');
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'Avg_Vx','fig');
+saveas(t,'Avg_Vx','tiff');
+%close the figure:
 close all;
 
+% create a figure to plot to:
 t = figure;
-v = im7Load('B00004*.im7', '3C');
-cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\16x16_adaptive_abs(Avg_V).im7','3C');
-cmp.index = 4;
-w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
-cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
-difference = operf('-',w,cmp2);
+%location of files to compare:
+file1 = [base1 '\B00002*.im7'];
+file2 = [base2 '\B00002*.im7'];
+%index to compare (this should match the im7 number above):
+index = 2;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
 showf(difference);
 setPlotFormatting(difference);
-set(gca, 'CLim', [0 100])
-saveas(t,'absAvgVDiff16','fig');
-saveas(t,'absAvgVDiff16','tiff');
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'Avg_Vy','fig');
+saveas(t,'Avg_Vy','tiff');
+%close the figure:
 close all;
 
-
+% create a figure to plot to:
 t = figure;
-v = im7Load('B00010*.im7', '3C');
-cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\8x8_adaptiveTKE.im7','3C');
-cmp.index = 10;
-w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
-cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
-difference = operf('-',w,cmp2);
+%location of files to compare:
+file1 = [base1 '\B00003*.im7'];
+file2 = [base2 '\B00003*.im7'];
+%index to compare (this should match the im7 number above):
+index = 3;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
 showf(difference);
 setPlotFormatting(difference);
-set(gca, 'CLim', [0 100])
-saveas(t,'TKEDiff8','fig');
-saveas(t,'TKEDiff8','tiff');
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'Avg_Vz','fig');
+saveas(t,'Avg_Vz','tiff');
+%close the figure:
 close all;
 
+% create a figure to plot to:
 t = figure;
-v = im7Load('B00010*.im7', '3C');
-cmp = im7Load('H:\datafile\xsil18Aug-TP10-1D\ComparisonFiles\16x16_adaptiveTKE.im7','3C');
-cmp.index = 10;
-w = remapf(v, linspace(200, -200, 400), linspace(-200, 200, 400));
-cmp2 = remapf(cmp, linspace(200, -200, 400), linspace(-200, 200, 400));
-difference = operf('-',w,cmp2);
+%location of files to compare:
+file1 = [base1 '\B00004*.im7'];
+file2 = [base2 '\B00004*.im7'];
+%index to compare (this should match the im7 number above):
+index = 4;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
 showf(difference);
 setPlotFormatting(difference);
-set(gca, 'CLim', [0 100])
-saveas(t,'TKEDiff16','fig');
-saveas(t,'TKEDiff16','tiff');
-close all
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'abs(Avg_V)','fig');
+saveas(t,'abs(Avg_V)','tiff');
+%close the figure:
+close all;
+
+% create a figure to plot to:
+t = figure;
+%location of files to compare:
+file1 = [base1 '\B00006*.im7'];
+file2 = [base2 '\B00006*.im7'];
+%index to compare (this should match the im7 number above):
+index = 6;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'RMS_Vx','fig');
+saveas(t,'RMS_Vx','tiff');
+%close the figure:
+close all;
+
+% create a figure to plot to:
+t = figure;
+%location of files to compare:
+file1 = [base1 '\B00007*.im7'];
+file2 = [base2 '\B00007*.im7'];
+%index to compare (this should match the im7 number above):
+index = 7;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'RMS_Vy','fig');
+saveas(t,'RMS_Vy','tiff');
+%close the figure:
+close all;
+
+% create a figure to plot to:
+t = figure;
+%location of files to compare:
+file1 = [base1 '\B00008*.im7'];
+file2 = [base2 '\B00008*.im7'];
+%index to compare (this should match the im7 number above):
+index = 8;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'RMS_Vz','fig');
+saveas(t,'RMS_Vz','tiff');
+%close the figure:
+close all;
+
+% create a figure to plot to:
+t = figure;
+%location of files to compare:
+file1 = [base1 '\B00009*.im7'];
+file2 = [base2 '\B00009*.im7'];
+%index to compare (this should match the im7 number above):
+index = 6;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'abs(RMS_V)','fig');
+saveas(t,'abs(RMS_V)','tiff');
+%close the figure:
+close all;
+
+% create a figure to plot to:
+t = figure;
+%location of files to compare:
+file1 = [base1 '\B00010*.im7'];
+file2 = [base2 '\B00010*.im7'];
+%index to compare (this should match the im7 number above):
+index = 6;
+%load im7 files:
+img1 = im7Load(file1,'3C');
+img2 = im7Load(file2,'3C');
+img1.index = index;
+img2.index = index;
+%if they are huge then downscale to make them reasonable:
+while size(img1.w) > 1000
+	%reduce size by a half:
+	img1.w = img1.w(1:2:end, 1:2:end);
+	img1.x = img1.x(1:2:end);
+	img1.y = img1.y(1:2:end);
+end
+while size(img2.w) > 1000
+	%reduce size by a half:
+	img2.w = img2.w(1:2:end, 1:2:end);
+	img2.x = img2.x(1:2:end);
+	img2.y = img2.y(1:2:end);
+end
+%rescale images so they can be compared:
+cmp1 = remapf(img1, linspace(200, -200, 400), linspace(-200, 200, 400));
+cmp2 = remapf(img2, linspace(200, -200, 400), linspace(-200, 200, 400));
+%subtract image 2 from image 1:
+difference = operf('-',cmp1,cmp2);
+%display on the plot:
+showf(difference);
+setPlotFormatting(difference);
+set(gca, 'CLim', [-100 100]);
+%save the plot as both fig and tiff:
+saveas(t,'Turb_kinetic_E','fig');
+saveas(t,'Turb_kinetic_E','tiff');
+%close the figure:
+close all;
+
