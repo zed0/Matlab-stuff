@@ -14,12 +14,14 @@ function [rf] = recentreImage(f,newx,newy)
 %	Note:  This is an almost exact clone of the remapf function.
 
 	%calculate the scale that the X and Y axes are currently using:
-	scaleX = (f.x(end) - f.x(1))/size(f.x,2);
-	scaleY = (f.y(end) - f.y(1))/size(f.y,2);
+	%scaleX = (f.x(end) - f.x(1))/size(f.x,2);
+	scaleX = getScale(f.Attributes, 'X');
+	%scaleY = (f.y(end) - f.y(1))/size(f.y,2);
+	scaleY = getScale(f.Attributes, 'Y');
 
 	%calculate the new range at the same scale:
-	rangeX = newx(1):scaleX:newx(2);
-	rangeY = newy(1):scaleY:newy(2);
+	rangeX = newx(1):abs(scaleX):newx(2);
+	rangeY = newy(1):abs(scaleY):newy(2);
 
 	%resize the grid:
 	rf = f;

@@ -3,7 +3,7 @@ function pptPropertyComparison(folders, outputFile, fileNumber)
 %	Version: 0.2
 %	Author: Ben Falconer
 %	Synatx:
-%		
+%
 	%Initialise all the variables for the symphony test:
 	run('symphonySettings');
 

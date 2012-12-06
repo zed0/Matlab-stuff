@@ -1,6 +1,6 @@
 %Set this according to which test we are currently looking at, options are
 %'optitheck', 'symphony', 'siloet'
-test = 'siloet';
+test = 'optitheck';
 if strcmp(test, 'optitheck')
 %% Optitech Settings
 	%D Value
@@ -21,7 +21,7 @@ if strcmp(test, 'optitheck')
 	dwnTargetOffsetY = -10;
 	dwnTargetOffsetZ = 30;
 	%2C:
-	twoCTargetOffsetX = -1382;
+	twoCTargetOffsetX = -1118;
 	twoCTargetOffsetY = 0;
 	twoCTargetOffsetZ = 27.2;
 
@@ -70,21 +70,21 @@ numFiles = 17;
 
 %limits for the colour axis to plot with:
 colorLimits = [
-	-50 50;	%1:  Avg Vx
-	-50 50;	%2:  Avg Vy
+	-100 100;	%1:  Avg Vx
+	-100 100;	%2:  Avg Vy
 	0 400;	%3:  Avg Vz
 	0 400;	%4:  abs(Avg V)
-	0 50000;%5:  Avg Kinetic Energy
+	0 100000;%5:  Avg Kinetic Energy
 	0 75;	%6:  RMS Vx
 	0 75;	%7:  RMS Vy
 	0 75;	%8:  RMS Vz
 	0 75;	%9:  abs(RMX V)
-	0 10000;	%10: Turbulent Kinetic Energy
-	0 750;	%11: Reynold Stress XY
-	0 4000;	%12: Reynold Stress XZ
-	0 750;	%13: Reynold Stress YZ
-	0 10000;%14: Reynold Stress XX
-	0 4000;	%15: Reynold Stress YY
-	0 4000;	%16: Reynold Stress ZZ
-	0 2000;	%17: TSS max 2D
+	0 3000;	%10: Turbulent Kinetic Energy
+	0 5000;	%11: Reynold Stress XY
+	0 5000;	%12: Reynold Stress XZ
+	0 5000;	%13: Reynold Stress YZ
+	0 5000;%14: Reynold Stress XX
+	0 5000;	%15: Reynold Stress YY
+	0 5000;	%16: Reynold Stress ZZ
+	0 5000;	%17: TSS max 2D
 ];

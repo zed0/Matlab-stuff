@@ -20,4 +20,3 @@ function [result sortIndex] = sortByAttribute(setList, attribute)
 	%use the sort values of the hashes to sort the setList:
 	result = setList(sortIndex);
 end
-
