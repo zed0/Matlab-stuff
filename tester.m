@@ -60,7 +60,7 @@ foldersA={
 }
 foldersB={
 	'17May2C-TP4-7Dy272-0.6X720mm-8normmasked';
-% 	'17May2C-TP4-7Dy272-0.8X635mm-mm8adaptmasked';
+	'17May2C-TP4-7Dy272-0.8X635mm-mm8adaptmasked';
  	'17May2C-TP4-7Dy272-1.1X508mm-8normmasked';
  	'17May2C-TP4-7Dy272-1.3X381mm-8normmasked';
  	'17May2C-TP4-7Dy272-1.7X254mm-8normmasked'; %This one causes noise on the left
@@ -120,11 +120,17 @@ index = 10;
 % e = im7Stitch(foldersE,index,0,0.2,0,0.1,2000);
 
 %minimum method:
-a = im7Stitch(foldersA,index,0,0,0,0,2300);
-b = im7Stitch(foldersB,index,0,0.15,0,0,2300);
-c = im7Stitch(foldersC,index,0,0,0,0,2600);
-d = im7Stitch(foldersD,index,0,0,0,0,2500);
-e = im7Stitch(foldersE,index,0,0,0,0,2000);
+% a = im7Stitch(foldersA,index,0,0,0,0,2300);
+% b = im7Stitch(foldersB,index,0,0.15,0,0,2300);
+% c = im7Stitch(foldersC,index,0,0,0,0,2600);
+% d = im7Stitch(foldersD,index,0,0,0,0,2500);
+% e = im7Stitch(foldersE,index,0,0,0,0,2000);
+
+a = im7Stitch(foldersA,index,0,0,0,0);
+b = im7Stitch(foldersB,index,0,0.15,0,0);
+c = im7Stitch(foldersC,index,0,0,0,0);
+d = im7Stitch(foldersD,index,0,0,0,0);
+e = im7Stitch(foldersE,index,0,0,0,0);
 
 results = {a;b;c;d;e;};
 result = im7Stitch(results,index,0,0,0,0);

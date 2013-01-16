@@ -65,9 +65,6 @@ function [target] = im7Stitch(foldername, filenumber,filter_left,filter_right,fi
 			target.index = v.index;
 			target.history = {['created from ' v.setname]};
 			
-% 			axisX = -200:newScaleX:4000;
-% 			axisY = -400:newScaleY:400;
-
 			%Create our canvas:
 			target.w = v.w;
 			target.mask = getImageMask(target);
@@ -81,26 +78,72 @@ function [target] = im7Stitch(foldername, filenumber,filter_left,filter_right,fi
 				%%%%%%%%
 				warning(['Not all images are the same scale, the resulting image may be incorrect! (',...
 					num2str(newScaleX), ',', num2str(newScaleY), ' comapred to ', num2str(target.scalex), ',', num2str(target.scaley), ')']);
+% 				disp(['Skipping ' v.setname]);
+% 				continue
 %  				throw(MException('im7Stitch:NotImplemented',...
 %  					'The im7Stitch function does not yet support using images of differing scales'));
 			end
 
 			%Get our new X and Y axes:
-			newX = [min(min(target.x), min(v.x)) max(max(target.x), max(v.x))];
-			newY = [min(min(target.y), min(v.y)) max(max(target.y), max(v.y))];
+% 			newX = -500:abs(newScaleX):500;
+%  			newY = -200:abs(newScaleY):4000;
+			newX = -400:0.7032:400;
+ 			newY = -200:0.7032:3000;
+
+% 			newX = [min(min(target.x), min(v.x)) max(max(target.x), max(v.x))];
+% 			newY = [min(min(target.y), min(v.y)) max(max(target.y), max(v.y))];
 
 			%Adjust the target image to accomodate the image to be
 			%stitched if it needs to be expanded:
 			if newX(1) < target.x(1) || newX(end) > target.x(end) || newY(1) < target.y(1) || newY(end) > target.y(end)
-				target = recentreImage(target, newX, newY);
+				temp = zeros(size(newX,2),size(newY,2));
+				offsetX = getCoordinateFromReal(newX, min(target.x(1),target.x(end)));
+				offsetY = getCoordinateFromReal(newY, min(target.y(1),target.y(end)));
+				rangeX = offsetX+1:offsetX+size(target.x,2);
+				rangeY = offsetY+1:offsetY+size(target.y,2);
+				if(target.x(1)<target.x(end))
+					rangeXtarget = 1:size(target.x,2);
+				else
+					rangeXtarget = size(target.x,2):-1:1;
+				end
+				if(target.y(1)<target.y(end))
+					rangeYtarget = 1:size(target.y,2);
+				else
+					rangeYtarget = size(target.y,2):-1:1;
+				end
+				temp(rangeX,rangeY) = target.w(rangeXtarget, rangeYtarget);
+				target.w = temp;
+				target.x = newX;
+				target.y = newY;
+				disp('expanded');
+% 				target = recentreImage(target, newX, newY);
 			end
 
-			[numX, numY]=size(target.w);
-			current = recentreImage(v, newX, newY, numX, numY);
-
-			%Find the range the stitched image will cover:
-% 			rangeX = getCoordinateFromReal(target.x, v.x(1)):getCoordinateFromReal(target.x, v.x(1))+size(v.x,2)-1;
-% 			rangeY = getCoordinateFromReal(target.y, v.y(1)):getCoordinateFromReal(target.y, v.y(1))+size(v.y,2)-1;
+% 			[numX, numY]=size(target.w);
+% 			current = recentreImage(v, newX, newY, numX, numY);
+			current = v;
+			if newX(1) < current.x(1) || newX(end) > current.x(end) || newY(1) < current.y(1) || newY(end) > current.y(end)
+				temp = zeros(size(newX,2),size(newY,2));
+				offsetX = getCoordinateFromReal(newX, min(current.x(1),current.x(end)));
+				offsetY = getCoordinateFromReal(newY, min(current.y(1),current.y(end)));
+				rangeX = offsetX+1:offsetX+size(current.x,2);
+				rangeY = offsetY+1:offsetY+size(current.y,2);
+				if(current.x(1)<current.x(end))
+					rangeXtarget = 1:size(current.x,2);
+				else
+					rangeXtarget = size(current.x,2):-1:1;
+				end
+				if(current.y(1)<current.y(end))
+					rangeYtarget = 1:size(current.y,2);
+				else
+					rangeYtarget = size(current.y,2):-1:1;
+				end
+				temp(rangeX,rangeY) = current.w(rangeXtarget, rangeYtarget);
+				current.w = temp;
+				current.x = newX;
+				current.y = newY;
+				disp('expanded');
+			end
 
 			%Paste our new image on top:
 % 			target.mask = getImageMask(target) + getImageMask(current);
@@ -110,9 +153,6 @@ function [target] = im7Stitch(foldername, filenumber,filter_left,filter_right,fi
 			target.w(target.w==0) = NaN;
 			current.w(current.w==0) = NaN;
 			target.w = min(target.w,current.w);
-			
-% 			target.w(rangeX, rangeY) = target.w(rangeX, rangeY) + v.w;
-% 			target.mask(rangeX, rangeY) = target.mask(rangeX, rangeY) + newMask;
 		end
 	end
 %  	target.w = target.w ./ target.mask;
