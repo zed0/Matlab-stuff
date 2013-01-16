@@ -1,12 +1,20 @@
-function [target] = im7Stitch(foldername, filenumber,x_filter,y_filter)
+function [target] = im7Stitch(foldername, filenumber,filter_left,filter_right,filter_top,filter_bot,limit)
 %IM7STITCH Convert a list of files from an im7 to a matrix
 %	Pass this a list of folders that contain .im7 files.
 %	The return value can be saved as a matrix.
+%	Also accepts a list of data rather than filenames.
 %	Usage:
 %		 folders={
 %			'17May2C-TP4-5Dy322-3c6mus2c6mus0.8msX635mm';
 %			'17May2C-TP4-5Dy322-3c6mus2c6mus1.1msX508mm';
 %			'17May2C-TP4-5Dy322-3c6mus2c6mus0.6msX720mm';
+%		}
+%		result = im7Stitch(folders);
+%	Or:
+%		 folders={
+%			a;
+%			b;
+%			c;
 %		}
 %		result = im7Stitch(folders);
 	run('symphonySettings');
@@ -25,7 +33,17 @@ function [target] = im7Stitch(foldername, filenumber,x_filter,y_filter)
 	target.setname = '';
 	target.mask = zeros(0,0);
 	for i=1:size(foldername)
-		v = im7NaiveFilter(im7Load([foldername{i} '/B' sprintf('%05d', filenumber) '*.im7']),x_filter, y_filter);
+		if ischar(foldername{i})
+			disp(['Currently processing ' num2str(i) '/' num2str(size(foldername,1)) ': ' foldername{i}]);
+			v = im7Load([foldername{i} '/B' sprintf('%05d', filenumber) '*.im7']);
+		else
+			v = foldername{i};
+			disp(['Currently processing ' num2str(i) '/' num2str(size(foldername,1)) ': ' v.setname]);
+		end
+		v = im7NaiveFilter(v,filter_left,filter_right,filter_top,filter_bot);
+		if(nargin >= 7)
+			v = im7LimitFilter(v,limit,0);
+		end
 		
 		newScaleX = getScale(v.Attributes, 'X');
 		newScaleY = getScale(v.Attributes, 'Y');
@@ -61,8 +79,10 @@ function [target] = im7Stitch(foldername, filenumber,x_filter,y_filter)
 				% TODO: nothing needs this at the moment, will throw a
 				% warning if something needs to be done.
 				%%%%%%%%
-				throw(MException('im7Stitch:NotImplemented',...
-					'The im7Stitch function does not yet support using images of differing scales'));
+				warning(['Not all images are the same scale, the resulting image may be incorrect! (',...
+					num2str(newScaleX), ',', num2str(newScaleY), ' comapred to ', num2str(target.scalex), ',', num2str(target.scaley), ')']);
+%  				throw(MException('im7Stitch:NotImplemented',...
+%  					'The im7Stitch function does not yet support using images of differing scales'));
 			end
 
 			%Get our new X and Y axes:
@@ -70,18 +90,27 @@ function [target] = im7Stitch(foldername, filenumber,x_filter,y_filter)
 			newY = [min(min(target.y), min(v.y)) max(max(target.y), max(v.y))];
 
 			%Adjust the target image to accomodate the image to be
-			%stitched:
-			target = recentreImage(target, newX, newY);
-			
-			current = recentreImage(v, newX, newY);
+			%stitched if it needs to be expanded:
+			if newX(1) < target.x(1) || newX(end) > target.x(end) || newY(1) < target.y(1) || newY(end) > target.y(end)
+				target = recentreImage(target, newX, newY);
+			end
+
+			[numX, numY]=size(target.w);
+			current = recentreImage(v, newX, newY, numX, numY);
+
 			%Find the range the stitched image will cover:
 % 			rangeX = getCoordinateFromReal(target.x, v.x(1)):getCoordinateFromReal(target.x, v.x(1))+size(v.x,2)-1;
 % 			rangeY = getCoordinateFromReal(target.y, v.y(1)):getCoordinateFromReal(target.y, v.y(1))+size(v.y,2)-1;
 
 			%Paste our new image on top:
-			target.mask = getImageMask(target) + getImageMask(current);
-			target.w = target.w + current.w;
-			target.w = target.w ./ target.mask;
+% 			target.mask = getImageMask(target) + getImageMask(current);
+% 			target.w = target.w + current.w;
+% 			target.w = target.w ./ target.mask;
+%Trying taking minimum of both images in overlapping portions:
+			target.w(target.w==0) = NaN;
+			current.w(current.w==0) = NaN;
+			target.w = min(target.w,current.w);
+			
 % 			target.w(rangeX, rangeY) = target.w(rangeX, rangeY) + v.w;
 % 			target.mask(rangeX, rangeY) = target.mask(rangeX, rangeY) + newMask;
 		end

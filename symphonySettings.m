@@ -21,7 +21,8 @@ if strcmp(test, 'optitheck')
 	dwnTargetOffsetY = -10;
 	dwnTargetOffsetZ = 30;
 	%2C:
-	twoCTargetOffsetX = -1118;
+	%twoCTargetOffsetX = -1118;
+	twoCTargetOffsetX = -914;
 	twoCTargetOffsetY = 0;
 	twoCTargetOffsetZ = 27.2;
 

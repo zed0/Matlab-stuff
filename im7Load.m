@@ -93,12 +93,16 @@ function [ v ] = im7Load( filename, type)
 		v = setoriginf(v, [-str2double(getAttribute(v.setname, 'y')), 0]);
 
 		%offset for the D position:
+		%not sure which of these is correct, the first gives better looking
+		%results.
+ 		%v = setoriginf(v, [0 , (D/2)*str2double(getAttribute(v.setname, 'd'))]);
 		v = setoriginf(v, [0 , D*str2double(getAttribute(v.setname, 'd'))]);
 
 		%offset additionally for the Dantec base position:
-		v = setoriginf(v, [0, dantecBase]);
+ 		%v = setoriginf(v, [0, dantecBase]);
 		%and offset for the current Dantec position:
-		v = setoriginf(v, [0, str2double(getAttribute(v.setname, 'x'))/2]);
+		%v = setoriginf(v, [0, str2double(getAttribute(v.setname, 'x'))/2]);
+ 		v = setoriginf(v, [0, str2double(getAttribute(v.setname, 'x'))]);
 
 		%flip the x axis:
 		v.y = v.y .* -1;

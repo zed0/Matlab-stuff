@@ -1,4 +1,4 @@
-function [rf] = recentreImage(f,newx,newy)
+function [rf] = recentreImage(f,newx,newy,numx,numy)
 %RECENTREIMAGE Recentres an image to fit between the given real coordinates
 %in mm.
 %	Note that this may give a slightly larger range than you are expecting
@@ -13,15 +13,21 @@ function [rf] = recentreImage(f,newx,newy)
 %		according to the original axis labels
 %	Note:  This is an almost exact clone of the remapf function.
 
-	%calculate the scale that the X and Y axes are currently using:
-	%scaleX = (f.x(end) - f.x(1))/size(f.x,2);
-	scaleX = getScale(f.Attributes, 'X');
-	%scaleY = (f.y(end) - f.y(1))/size(f.y,2);
-	scaleY = getScale(f.Attributes, 'Y');
 
-	%calculate the new range at the same scale:
-	rangeX = newx(1):abs(scaleX):newx(2);
-	rangeY = newy(1):abs(scaleY):newy(2);
+	if(nargin < 4) %Calculate the scale if it is not provided:
+		%calculate the scale that the X and Y axes are currently using:
+		%scaleX = (f.x(end) - f.x(1))/size(f.x,2);
+		scaleX = getScale(f.Attributes, 'X');
+		%scaleY = (f.y(end) - f.y(1))/size(f.y,2);
+		scaleY = getScale(f.Attributes, 'Y');
+
+		%calculate the new range at the same scale:
+		rangeX = newx(1):abs(scaleX):newx(2);
+		rangeY = newy(1):abs(scaleY):newy(2);
+	else
+		rangeX = linspace(newx(1),newx(2),numx);
+		rangeY = linspace(newy(1),newy(2),numy);
+	end
 
 	%resize the grid:
 	rf = f;

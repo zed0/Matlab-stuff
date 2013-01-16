@@ -62,6 +62,32 @@ function rename(filelist)
 	p6 = '(?:x)?(?<x>\d+)?';
 	p7 = '(?:-)?(?<extra>.*)?$';
 	patterns{3} = [p1 p2 p3 p4 p5 p6 p7];
+	
+	%pattern4
+	%deal with this format: Opt-TP4-17May-3CUp-0.5Dy322-16normmasked
+	p1 = '^(?<exp>[a-zA-Z]+)-';
+	p2 = 'TP(?<tp>\d+)-';
+	p3 = '(?<day>\d+)';
+	p4 = '(?<month>[a-zA-Z]+)-';
+	p5 = '(?<type>\d[a-zA-Z]+)-';
+	p6 = '(?<d>[\d\.]+)D';
+	p7 = 'y(?<y>\d+)';
+	p8 = '(?:x)?(?<x>\d+)?';
+	p9 = '(?:-)?(?<extra>.*)?$';
+	patterns{4} = [p1 p2 p3 p4 p5 p6 p7 p8 p9];
+	
+	%pattern5
+	%deal with this format: Opt-TP4-17May-18Dy200X720mm0.4ms16adapt
+	p1 = '^(?<exp>[a-zA-Z]+)-';
+	p2 = 'TP(?<tp>\d+)-';
+	p3 = '(?<day>\d+)';
+	p4 = '(?<month>[a-zA-Z]+)-';
+	p5 = '(?<d>[\d\.]+)D';
+	p6 = 'y(?<y>\d+)';
+	p7 = '(?:X)?(?<x>\d+)?m?m?';
+	p8 = '(?<threec>[\d\.]+)?(?:ms)?';
+	p9 = '(?<extra>.*)?$';
+	patterns{5} = [p1 p2 p3 p4 p5 p6 p7 p8 p9];
 
 	for i=1:size(filelist)
 		filename = char(filelist(i));
@@ -76,6 +102,9 @@ function rename(filelist)
 			for j=1:size(patterns,2)
 				matches = regexp(filename, patterns{j}, 'names');
 				if ~isempty(matches)
+					if j == 5
+						matches = setfield(matches, 'type', '3CUp');
+					end
 					break;
 				end
 			end
