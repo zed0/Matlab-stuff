@@ -51,11 +51,11 @@ function value = getAttribute( setname, attribute )
 	matches = regexp(setname, pattern, 'names');
 	if size(matches) > 0
 		%return the requested match:
-% 		if iscell(matches)
-% 			value = char(matches{1}.(attribute));
-% 		else
+		if iscell(matches)
+			value = char(matches{1}.(attribute));
+		else
 			value = char(matches.(attribute));
-% 		end
+		end
 		if strcmp(value,'')
 			warning('MATLAB:getAttribute:no_attrib', ['No value for ' attribute ' is given in the metadata for this file']);
 			value = '0';

@@ -88,6 +88,20 @@ function rename(filelist)
 	p8 = '(?<threec>[\d\.]+)?(?:ms)?';
 	p9 = '(?<extra>.*)?$';
 	patterns{5} = [p1 p2 p3 p4 p5 p6 p7 p8 p9];
+	
+	%pattern5
+	%deal with this format: Opt-20May2C-TP6-7Dy272X0mm2.4ms-postproc
+	p1 = '^(?<exp>[a-zA-Z]+)-';
+	p2 = '(?<day>\d+)';
+	p3 = '(?<month>[a-zA-Z]+)';
+	p4 = '(?<type>\d[a-zA-Z]+)-';
+	p5 = 'TP(?<tp>\d+)-';
+	p6 = '(?<d>[\d\.]+)D';
+	p7 = 'y(?<y>\d+)';
+	p8 = '(?:X)?(?<x>\d+)?m?m?';
+	p9 = '(?<delay>[\d\.]+ms)?';
+	p10 = '-?(?<extra>.*)?$';
+	patterns{6} = [p1 p2 p3 p4 p5 p6 p7 p8 p9 p10];
 
 	for i=1:size(filelist)
 		filename = char(filelist(i));
