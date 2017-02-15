@@ -5,7 +5,7 @@ Some Matlab libraries are needed for some of the projects:
 * readimx:
 	* avaliable for Windows 32-bit at: http://www.fast.u-psud.fr/pivmat/readimx4matlab_v1.5R1_2009.zip
 	* available for Windows 64-bit at: http://www.fast.u-psud.fr/pivmat/readimx4matlab_v1.5R1_2009_64.zip
-* saveppt2: available at: https://github.com/jedediahfrey/Jedediah-Frey-s-MATLABCentral-Projects/tree/master/saveppt2
+* saveppt2: available at: https://github.com/jedediahfrey/matlab_saveppt2
 
 Some functions also require Powerpoint to be installed on the machine.
 
