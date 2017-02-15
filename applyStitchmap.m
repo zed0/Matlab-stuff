@@ -2,8 +2,21 @@ function [target] = applyStitchmap(stitchmap, folders, index)
 %APPLYSTITCHMAP Summary of this function goes here
 %   Detailed explanation goes here
 	run('symphonySettings');
-	newX = -400:0.7032:400;
-	newY = -200:0.7032:3000;
+	
+	if ischar(folders{1})
+		v = im7Load([folders{1} '/B' sprintf('%05d', index) '*.im7']);
+	else
+		v = folders{1};
+	end
+	newScaleX = getScale(v.Attributes, 'X');
+	newScaleY = getScale(v.Attributes, 'Y');
+	newX = -400:abs(newScaleX):400;
+	newY = -200:abs(newScaleY):3000;
+
+	%newX = -400:0.7032:400;
+	%newY = -200:0.7032:3000;
+% 	newX = -400:1.4058:400;
+% 	newY = -200:1.4058:3000;
 
 	
 	target = struct;
@@ -18,6 +31,7 @@ function [target] = applyStitchmap(stitchmap, folders, index)
 		else
 			v = im7Load([folders{i} '/B' sprintf('%05d', index) '*.im7']);
 		end
+		disp(v.setname);
 		if i == 1
 			%Use the current scale:
 			newScaleX = getScale(v.Attributes, 'X');

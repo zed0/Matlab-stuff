@@ -39,12 +39,12 @@ function value = getAttribute( setname, attribute )
 	p4 = 'TP(?<tp>[\da-zA-Z]+)-';
 	p5 = '(?<d>[\d\.]+)D';
 	p6 = 'y(?<y>\d+)-';
-	p7 = '(?:3c)?(?<threec>\d+)?(?:mus)?'; %Yes, Matlab's regexes are terrible.
-	p8 = '(?:2c)?(?<twoc>\d+)?(?:mus)?';
+	p7 = '(?<a>3c)?(?<threec>(?(a)\d+))(?(a)mus)'; %Yes, Matlab's regexes are terrible.
+	p8 = '(?<b>2c)?(?<twoc>(?(b)\d+))(?(b)mus)';
 	p9 = '(?<delay>[\d\.]+)?(?:ms)?';
 	p10 = '(?:X)?(?<x>\d+)?(?:mm)?';
 	p11 = '(?<set>\.set)?';
-	p12 = '(?:[_-])?(?<extra>.*)?$';
+	p12 = '(?<ex>[_-])?(?<extra>(?(ex).*))$';
 	pattern = [p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12];
 
 	%match the above pattern in the setname:

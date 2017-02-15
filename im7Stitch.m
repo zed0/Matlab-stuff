@@ -27,11 +27,24 @@ function [target, stitchmap] = im7Stitch(foldername, filenumber,filter_left,filt
 		y_filter = 0;
 	end
 	
+	if ischar(foldername{1})
+		v = im7Load([foldername{1} '/B' sprintf('%05d', filenumber) '*.im7']);
+	else
+		v = foldername{1};
+	end
+	newScaleX = getScale(v.Attributes, 'X');
+	newScaleY = getScale(v.Attributes, 'Y');
+	newX = -400:abs(newScaleX):400;
+	newY = -200:abs(newScaleY):3000;
+
 	%Get our new X and Y axes:
 % 	newX = -500:abs(newScaleX):500;
 %  	newY = -200:abs(newScaleY):4000;
-	newX = -400:0.7032:400;
-	newY = -200:0.7032:3000;
+	%newX = -400:0.7032:400;
+	%newY = -200:0.7032:3000;
+% 	newX = -400:1.4058:400;
+% 	newY = -200:1.4058:3000;
+
 
 	target = struct;
 	target.w = zeros(0,0);

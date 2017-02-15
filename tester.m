@@ -47,234 +47,306 @@
 
 %% Image Stitching:
 
-%TP6:
-% foldersA={
-% 	'19May2C-TP6-15Dy222-X320mm';
-% 	'19May2C-TP6-15Dy222-X640mm';
-% 	'19May2C-TP6-15Dy422-X0mm';
-% 	'19May2C-TP6-15Dy422-X320mm';
-% 	'19May2C-TP6-15Dy422-X640mm';
-% }
-% foldersB={
-% 	'20May2C-TP6-5Dy272-0.6msX720mm';
-% 	'20May2C-TP6-5Dy272-0.8msX635mm';
-% 	'20May2C-TP6-5Dy272-X254mm';
-% 	'20May2C-TP6-5Dy272-X381mm';
-% 	'20May2C-TP6-5Dy272-X508mm';
-% }
-% foldersC={
-% 	'20May2C-TP6-7Dy272-0.6msX720mm';
-% 	'20May2C-TP6-7Dy272-0.8msX635mm';
-% 	'20May2C-TP6-7Dy272-1.1msX508mm';
-% 	'20May2C-TP6-7Dy272-1.3msX381mm';
-% 	'20May2C-TP6-7Dy272-1.7msX254mm';
-% 	'20May2C-TP6-7Dy272-2.0msX127mm';
-% 	'20May2C-TP6-7Dy272-2.4msX0mm';
-% 	'20May2C-TP6-7Dy272-X0mm';
-% }
-% foldersD={
-% 	'20May2C-TP6-9Dy250-0.8msX635mm';
-% 	'20May2C-TP6-9Dy250-1.1msX508mm';
-% 	'20May2C-TP6-9Dy250-1.5msX381mm';
-% 	'20May2C-TP6-9Dy250-1.9msX254mm';
-% }
+% %TP6:
+% % foldersA={
+% % 	'19May2C-TP6-15Dy222-X320mm';
+% % 	'19May2C-TP6-15Dy222-X640mm';
+% % 	'19May2C-TP6-15Dy422-X0mm';
+% % 	'19May2C-TP6-15Dy422-X320mm';
+% % 	'19May2C-TP6-15Dy422-X640mm';
+% % 	'19May2C-TP6-15Dy222-X0mm';
+% % }
+% % foldersB={
+% % 	'20May2C-TP6-5Dy272-0.6msX720mm';
+% % 	'20May2C-TP6-5Dy272-0.8msX635mm';
+% % 	'20May2C-TP6-5Dy272-X254mm';
+% % 	'20May2C-TP6-5Dy272-X381mm';
+% % 	'20May2C-TP6-5Dy272-X508mm';
+% % }
+% % foldersC={
+% % 	'20May2C-TP6-7Dy272-0.6msX720mm';
+% % 	'20May2C-TP6-7Dy272-0.8msX635mm';
+% % 	'20May2C-TP6-7Dy272-1.1msX508mm';
+% % 	'20May2C-TP6-7Dy272-1.3msX381mm';
+% % 	'20May2C-TP6-7Dy272-1.7msX254mm';
+% % 	'20May2C-TP6-7Dy272-2.0msX127mm';
+% % 	'20May2C-TP6-7Dy272-2.4msX0mm';
+% % 	'20May2C-TP6-7Dy272-X0mm';
+% % }
+% % foldersD={
+% % 	'20May2C-TP6-9Dy250-0.8msX635mm';
+% % 	'20May2C-TP6-9Dy250-1.1msX508mm';
+% % 	'20May2C-TP6-9Dy250-1.5msX381mm';
+% % 	'20May2C-TP6-9Dy250-1.9msX254mm';
+% % }
+% % 
+% % foldersE={
+% % 	'20May2C-TP6-9Dy250-X720mm';
+% % }
 % 
-% foldersE={
-% 	'20May2C-TP6-9Dy250-X720mm';
-% 	'19May2C-TP6-9Dy222-X0mm';
-% }
-
-%TP6 - postproc
-% foldersA={
-% 	'19May2C-TP6-18Dy200-X480mm-postproc';
-% 	'19May2C-TP6-18Dy200-X640mm-postproc';
-% 	'19May2C-TP6-18Dy400-X480mm-postproc';
-% 	'19May2C-TP6-18Dy400-X640mm-postproc';
-% }
-% foldersB={
-% 	'20May2C-TP6-5Dy272-X127mm-postproc';
-% 	'20May2C-TP6-5Dy272-X254mm-postproc';
-% 	'20May2C-TP6-5Dy272-X381mm-postproc';
-% 	'20May2C-TP6-5Dy272-X508mm-postproc';
-% 	'20May2C-TP6-5Dy272-X635mm-postproc';
-% 	'20May2C-TP6-5Dy272-X720mm-postproc';
-% }
-% foldersC={
-% 	'20May2C-TP6-7Dy272-2.4msX0mm-postproc';
-% 	'20May2C-TP6-7Dy272-X0mm-postproc';
-% 	'20May2C-TP6-7Dy272-X127mm-postproc';
-% 	'20May2C-TP6-7Dy272-X254mm-postproc';
-% }
-% foldersD={
-% 	'20May2C-TP6-7Dy272-X381mm-postproc';
-% 	'20May2C-TP6-7Dy272-X508mm-postproc';
-% 	'20May2C-TP6-7Dy272-X635mm-postproc';
-% 	'20May2C-TP6-7Dy272-X720mm-postproc';
-% }
-% foldersE={
-% 	'20May2C-TP6-9Dy250-X381mm-postproc';
-% 	'20May2C-TP6-9Dy250-X508mm-postproc';
-% 	'20May2C-TP6-9Dy250-X635mm-postproc';
-% 	'20May2C-TP6-9Dy250-X720mm-postproc';
-% 	'20May2C-TP6-9Dy272-X254mm-postproc';
-% }
-
-%TP6 - both:
-% foldersA={
-% 	'19May2C-TP6-18Dy200-X480mm-postproc';
-% 	'19May2C-TP6-18Dy200-X640mm-postproc';
-% 	'19May2C-TP6-18Dy400-X480mm-postproc';
-% 	'19May2C-TP6-18Dy400-X640mm-postproc';
-% }
+% %TP6 - postproc
+% % foldersA={
+% % 	'19May2C-TP6-18Dy200-X480mm-postproc';
+% % 	'19May2C-TP6-18Dy200-X640mm-postproc';
+% % 	'19May2C-TP6-18Dy400-X480mm-postproc';
+% % 	'19May2C-TP6-18Dy400-X640mm-postproc';
+% % }
+% % foldersB={
+% % 	'20May2C-TP6-5Dy272-X127mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X254mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X381mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X508mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X635mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X720mm-postproc';
+% % }
+% % foldersC={
+% % 	'19May2C-TP6-15Dy222-X0mm-postproc';
+% % 	'19May2C-TP6-15Dy222-X320mm-postproc';
+% % 	'19May2C-TP6-15Dy222-X640mm-postproc';
+% % 	'19May2C-TP6-15Dy422-X0mm-postproc';
+% % 	'19May2C-TP6-15Dy422-X320mm-postproc';
+% % 	'19May2C-TP6-15Dy422-X640mm-postproc';
+% % }
+% % foldersD={
+% % 	'20May2C-TP6-7Dy272-2.4msX0mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X0mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X127mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X254mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X381mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X508mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X635mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X720mm-postproc';
+% % }
+% % foldersE={
+% % 	'20May2C-TP6-9Dy250-X381mm-postproc';
+% % 	'20May2C-TP6-9Dy250-X508mm-postproc';
+% % 	'20May2C-TP6-9Dy250-X635mm-postproc';
+% %  	'20May2C-TP6-9Dy250-X720mm-postproc';
+% %  	'20May2C-TP6-9Dy250-X254mm-postproc';
+% % }
 % 
+% %TP6 - both:
+% % foldersA={
+% % 	'19May2C-TP6-18Dy200-X480mm-postproc';
+% % 	'19May2C-TP6-18Dy200-X640mm-postproc';
+% % 	'19May2C-TP6-18Dy400-X480mm-postproc';
+% % 	'19May2C-TP6-18Dy400-X640mm-postproc';
+% % }
+% % 
+% % foldersB={
+% % 	'19May2C-TP6-15Dy222-X320mm';
+% % 	'19May2C-TP6-15Dy222-X640mm';
+% % 	'19May2C-TP6-15Dy422-X0mm';
+% % 	'19May2C-TP6-15Dy422-X320mm';
+% % 	'19May2C-TP6-15Dy422-X640mm';
+% % 	'19May2C-TP6-15Dy222-X0mm';
+% % 	'19May2C-TP6-15Dy222-X0mm-postproc';
+% % 	'19May2C-TP6-15Dy222-X320mm-postproc';
+% % 	'19May2C-TP6-15Dy222-X640mm-postproc';
+% % 	'19May2C-TP6-15Dy422-X0mm-postproc';
+% % 	'19May2C-TP6-15Dy422-X320mm-postproc';
+% % 	'19May2C-TP6-15Dy422-X640mm-postproc';
+% % }
+% % foldersC={
+% % 	'20May2C-TP6-5Dy272-0.6msX720mm';
+% % 	'20May2C-TP6-5Dy272-0.8msX635mm';
+% % 	'20May2C-TP6-5Dy272-X254mm';
+% % 	'20May2C-TP6-5Dy272-X381mm';
+% % 	'20May2C-TP6-5Dy272-X508mm';
+% % 	'20May2C-TP6-5Dy272-X127mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X254mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X381mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X508mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X635mm-postproc';
+% % 	'20May2C-TP6-5Dy272-X720mm-postproc';
+% % }
+% % foldersD={
+% % 	'20May2C-TP6-7Dy272-0.6msX720mm';
+% % 	'20May2C-TP6-7Dy272-0.8msX635mm';
+% % 	'20May2C-TP6-7Dy272-1.1msX508mm';
+% % 	'20May2C-TP6-7Dy272-1.3msX381mm';
+% % 	'20May2C-TP6-7Dy272-1.7msX254mm';
+% % 	'20May2C-TP6-7Dy272-2.0msX127mm';
+% % 	'20May2C-TP6-7Dy272-2.4msX0mm';
+% % 	'20May2C-TP6-7Dy272-X0mm';
+% % 	'20May2C-TP6-7Dy272-2.4msX0mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X0mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X127mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X254mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X381mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X508mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X635mm-postproc';
+% % 	'20May2C-TP6-7Dy272-X720mm-postproc';
+% % }
+% % foldersE={
+% % 	'20May2C-TP6-9Dy250-0.8msX635mm';
+% % 	'20May2C-TP6-9Dy250-1.1msX508mm';
+% % 	'20May2C-TP6-9Dy250-1.5msX381mm';
+% % 	'20May2C-TP6-9Dy250-1.9msX254mm';
+% % 	'20May2C-TP6-9Dy250-X720mm';
+% % 	'20May2C-TP6-9Dy250-X381mm-postproc';
+% % 	'20May2C-TP6-9Dy250-X508mm-postproc';
+% % 	'20May2C-TP6-9Dy250-X635mm-postproc';
+% % 	'20May2C-TP6-9Dy250-X720mm-postproc';
+% % 	'20May2C-TP6-9Dy250-X254mm-postproc';
+% % }
+% 
+% %TP4
+% % foldersA={
+% % % 	'17May2C-TP4-5Dy322-0.6X720mm-8normmasked';
+% % % 	'17May2C-TP4-5Dy322-0.8X635mm-8normmasked';
+% % 	'17May2C-TP4-5Dy322-1.1X508mm-8adaptmasked';
+% % % 	'17May2C-TP4-5Dy322-1.1X508mm-8normmasked';
+% % 	'17May2C-TP4-5Dy322-1.3X381mm-8fadaptmasked';
+% % % 	'17May2C-TP4-5Dy322-1.3X381mm-8normmasked';
+% % % 	'17May2C-TP4-5Dy322-1.7X254mm-16normmasked';
+% % 	'17May2C-TP4-5Dy322-1.7X254mm-8adaptmasked';
+% % % 	'17May2C-TP4-5Dy322-1.7X254mm-8normmasked';
+% % % 	'17May2C-TP4-5Dy322-2X127mm-8normmasked';
+% % }
+% % foldersB={
+% % 	'17May2C-TP4-7Dy272-0.6X720mm-8normmasked';
+% % 	'17May2C-TP4-7Dy272-0.8X635mm-mm8adaptmasked';
+% %  	'17May2C-TP4-7Dy272-1.1X508mm-8normmasked';
+% %  	'17May2C-TP4-7Dy272-1.3X381mm-8normmasked';
+% %  	'17May2C-TP4-7Dy272-1.7X254mm-8normmasked'; %This one causes noise on the left
+% % 	'18May2C-TP4-7Dy272-0.6X720mm-8normmasked';
+% % 	'18May2C-TP4-7Dy272-0.8X635mm-8normmasked';
+% % }
+% % foldersC={
+% % 	'18May2C-TP4-9Dy272-0.6X720mm-8normmasked';
+% % 	'18May2C-TP4-9Dy272-0.8X635mm-8normmasked';
+% % 	'18May2C-TP4-9Dy272-1.5X381mm-8normmasked';
+% % 	'18May2C-TP4-9Dy272-1.9X254mm-8normmasked';
+% % 	'18may2C-TP4-9Dy272-1.1X508mm-8normmasked';
+% % }
+% % 
+% % foldersD={
+% % 	'18May2C-TP4-15Dy222-8X0mm-normalmasked';
+% % 	'18May2C-TP4-15Dy222-8X320mm-normalmasked';
+% % 	'18May2C-TP4-15Dy222-8X640mm-normmasked';
+% % 	'18May2C-TP4-15Dy422-8X0mm-normmasked';
+% % 	'18May2C-TP4-15Dy422-8X320mm-normmasked';
+% % 	'18May2C-TP4-15Dy422-8X640mm-normmasked';
+% % }
+% % 
+% % %using 16 mesh instead:
+% % % foldersD={
+% % % 	'18May2C-TP4-15Dy222-16X0mm-adapt';
+% % % 	'18May2C-TP4-15Dy422-16X0mm-adapt';
+% % %  	'18May2C-TP4-15Dy422-16X320mm-adapt';
+% % % 	'18May2C-TP4-15Dy222-16X320mm-adapt';
+% % % 	'18May2C-TP4-15Dy422-16X640mm-adapt';
+% % % 	'18May2C-TP4-15Dy222-16X640mm-adapt';
+% % % }
+% % 
+% % foldersE={
+% % 	'18May2C-TP4-18Dy200-8X480mm-normmasked';
+% % 	'18May2C-TP4-18Dy200-8X640mm-normmasked';
+% % 	'18May2C-TP4-18Dy400-8X480mm-normmasked';
+% % 	'18May2C-TP4-18Dy400-8X640mm-normmasked';
+% % % 	'17May2C-TP4-18Dy200-0.4X720mm-16normmasked';
+% % 	'17May2C-TP4-18Dy200-0.4X720mm-8normmasked';
+% % % 	'17May2C-TP4-18Dy400-0.4X720mm-16normmasked';
+% % 	'17May2C-TP4-18Dy400-0.4X720mm-8normmasked';
+% % }
+% 
+% foldersA={
+% 	'18May2C-TP4-15Dy222-X0mm-postproc';
+% 	'18May2C-TP4-15Dy222-X320mm-postproc';
+% 	'18May2C-TP4-15Dy222-X640mm-postproc';
+% 	'18May2C-TP4-15Dy422-X0mm-postproc';
+% 	'18May2C-TP4-15Dy422-X320mm-postproc';
+% 	'18May2C-TP4-15Dy422-X640mm-postproc';
+% }
 % foldersB={
-% 	'19May2C-TP6-15Dy222-X320mm';
-% 	'19May2C-TP6-15Dy222-X640mm';
-% 	'19May2C-TP6-15Dy422-X0mm';
-% 	'19May2C-TP6-15Dy422-X320mm';
-% 	'19May2C-TP6-15Dy422-X640mm';
+% 	'18May2C-TP4-18Dy200-X480mm-postproc';
+% 	'18May2C-TP4-18Dy200-X640mm-postproc';
+% 	'18May2C-TP4-18Dy400-X480mm-postproc';
+% 	'18May2C-TP4-18Dy400-X640mm-postproc';
 % }
 % foldersC={
-% 	'20May2C-TP6-5Dy272-0.6msX720mm';
-% 	'20May2C-TP6-5Dy272-0.8msX635mm';
-% 	'20May2C-TP6-5Dy272-X254mm';
-% 	'20May2C-TP6-5Dy272-X381mm';
-% 	'20May2C-TP6-5Dy272-X508mm';
-% 	'20May2C-TP6-5Dy272-X127mm-postproc';
-% 	'20May2C-TP6-5Dy272-X254mm-postproc';
-% 	'20May2C-TP6-5Dy272-X381mm-postproc';
-% 	'20May2C-TP6-5Dy272-X508mm-postproc';
-% 	'20May2C-TP6-5Dy272-X635mm-postproc';
-% 	'20May2C-TP6-5Dy272-X720mm-postproc';
+% 	'18May2C-TP4-7Dy272-X635mm-postproc';
+% 	'18May2C-TP4-7Dy272-X720mm-postproc';
 % }
 % foldersD={
-% 	'20May2C-TP6-7Dy272-0.6msX720mm';
-% 	'20May2C-TP6-7Dy272-0.8msX635mm';
-% 	'20May2C-TP6-7Dy272-1.1msX508mm';
-% 	'20May2C-TP6-7Dy272-1.3msX381mm';
-% 	'20May2C-TP6-7Dy272-1.7msX254mm';
-% 	'20May2C-TP6-7Dy272-2.0msX127mm';
-% 	'20May2C-TP6-7Dy272-2.4msX0mm';
-% 	'20May2C-TP6-7Dy272-X0mm';
-% 	'20May2C-TP6-7Dy272-2.4msX0mm-postproc';
-% 	'20May2C-TP6-7Dy272-X0mm-postproc';
-% 	'20May2C-TP6-7Dy272-X127mm-postproc';
-% 	'20May2C-TP6-7Dy272-X254mm-postproc';
-% 	'20May2C-TP6-7Dy272-X381mm-postproc';
-% 	'20May2C-TP6-7Dy272-X508mm-postproc';
-% 	'20May2C-TP6-7Dy272-X635mm-postproc';
-% 	'20May2C-TP6-7Dy272-X720mm-postproc';
+% 	'18May2C-TP4-9Dy272-X254mm-postproc';
+% 	'18May2C-TP4-9Dy272-X381mm-postproc';
+% 	'18May2C-TP4-9Dy272-X508mm-postproc';
+% 	'18May2C-TP4-9Dy272-X635mm-postproc';
+% 	'18May2C-TP4-9Dy272-X720mm-postproc';
 % }
 % foldersE={
-% 	'20May2C-TP6-9Dy250-0.8msX635mm';
-% 	'20May2C-TP6-9Dy250-1.1msX508mm';
-% 	'20May2C-TP6-9Dy250-1.5msX381mm';
-% 	'20May2C-TP6-9Dy250-1.9msX254mm';
-% 	'20May2C-TP6-9Dy250-X720mm';
-% 	'19May2C-TP6-9Dy222-X0mm';
-% 	'20May2C-TP6-9Dy250-X381mm-postproc';
-% 	'20May2C-TP6-9Dy250-X508mm-postproc';
-% 	'20May2C-TP6-9Dy250-X635mm-postproc';
-% 	'20May2C-TP6-9Dy250-X720mm-postproc';
-% 	'20May2C-TP6-9Dy272-X254mm-postproc';
-% }
-
-%TP4
-foldersA={
 % 	'17May2C-TP4-5Dy322-0.6X720mm-8normmasked';
 % 	'17May2C-TP4-5Dy322-0.8X635mm-8normmasked';
-	'17May2C-TP4-5Dy322-1.1X508mm-8adaptmasked';
+% 	'17May2C-TP4-5Dy322-1.1X508mm-8adaptmasked';
 % 	'17May2C-TP4-5Dy322-1.1X508mm-8normmasked';
-	'17May2C-TP4-5Dy322-1.3X381mm-8fadaptmasked';
+% 	'17May2C-TP4-5Dy322-1.1X508mm-8normmasked1';
+% 	'17May2C-TP4-5Dy322-1.3X381mm-8fadaptmasked';
 % 	'17May2C-TP4-5Dy322-1.3X381mm-8normmasked';
 % 	'17May2C-TP4-5Dy322-1.7X254mm-16normmasked';
-	'17May2C-TP4-5Dy322-1.7X254mm-8adaptmasked';
+% 	'17May2C-TP4-5Dy322-1.7X254mm-8adaptmasked';
 % 	'17May2C-TP4-5Dy322-1.7X254mm-8normmasked';
 % 	'17May2C-TP4-5Dy322-2X127mm-8normmasked';
-}
-foldersB={
-	'17May2C-TP4-7Dy272-0.6X720mm-8normmasked';
-	'17May2C-TP4-7Dy272-0.8X635mm-mm8adaptmasked';
- 	'17May2C-TP4-7Dy272-1.1X508mm-8normmasked';
- 	'17May2C-TP4-7Dy272-1.3X381mm-8normmasked';
- 	'17May2C-TP4-7Dy272-1.7X254mm-8normmasked'; %This one causes noise on the left
-	'18May2C-TP4-7Dy272-0.6X720mm-8normmasked';
-	'18May2C-TP4-7Dy272-0.8X635mm-8normmasked';
-}
-foldersC={
-	'18May2C-TP4-9Dy272-0.6X720mm-8normmasked';
-	'18May2C-TP4-9Dy272-0.8X635mm-8normmasked';
-	'18May2C-TP4-9Dy272-1.5X381mm-8normmasked';
-	'18May2C-TP4-9Dy272-1.9X254mm-8normmasked';
-	'18may2C-TP4-9Dy272-1.1X508mm-8normmasked';
-}
-
-foldersD={
-	'18May2C-TP4-15Dy222-8X0mm-normalmasked';
-	'18May2C-TP4-15Dy222-8X320mm-normalmasked';
-	'18May2C-TP4-15Dy222-8X640mm-normmasked';
-	'18May2C-TP4-15Dy422-8X0mm-normmasked';
-	'18May2C-TP4-15Dy422-8X320mm-normmasked';
-	'18May2C-TP4-15Dy422-8X640mm-normmasked';
-}
-
-%using 16 mesh instead:
-% foldersD={
-% 	'18May2C-TP4-15Dy222-16X0mm-adapt';
-% 	'18May2C-TP4-15Dy422-16X0mm-adapt';
-%  	'18May2C-TP4-15Dy422-16X320mm-adapt';
-% 	'18May2C-TP4-15Dy222-16X320mm-adapt';
-% 	'18May2C-TP4-15Dy422-16X640mm-adapt';
-% 	'18May2C-TP4-15Dy222-16X640mm-adapt';
 % }
+% index = 10;
+% % for i=1:size(folders)
+% % 	v = im7Load([folders{i} '/B' sprintf('%05d', index) '*.im7']);
+% % % 	figure;
+% % % 	showf(v);
+% % % 	setPlotFormatting(v);
+% % end
+% 
+% [a,sma] = im7Stitch(foldersA,index,0,0,0,0);
+% [b,smb] = im7Stitch(foldersB,index,0,0,0,0);
+% [c,smc] = im7Stitch(foldersC,index,0,0,0,0);
+% [d,smd] = im7Stitch(foldersD,index,0,0,0,0);
+% [e,sme] = im7Stitch(foldersE,index,0,0,0,0);
+% temp = {a;b;c;d;e;};
+% [r,smr] = im7Stitch(temp,index,0,0,0,0);
+% 
+% max = 17;
+% results = {};
+% for i=1:max
+% 	disp(['processing ' int2str(i)]);
+% 	a=applyStitchmap(sma,foldersA,i);
+% 	b=applyStitchmap(smb,foldersB,i);
+% 	c=applyStitchmap(smc,foldersC,i);
+% 	d=applyStitchmap(smd,foldersD,i);
+% 	e=applyStitchmap(sme,foldersE,i);
+% 	temp = {a;b;c;d;e;};
+% 	results{i} = applyStitchmap(smr,temp);
+% 	current = results{i};
+% 	t=figure;
+% 	showf(current);
+% 	setPlotFormatting(current);
+% 	saveas(t,['Opt_TP4_fullstitch_' int2str(i)],'fig');
+% 	saveas(t,['Opt_TP4_fullstitch_' int2str(i)],'png');
+% 	save(['Opt_TP4_fullstitch_' int2str(i)], 'current');
+% 	close all;
+% end
+% figure; showf(r); setPlotFormatting(r);
 
-foldersE={
-	'18May2C-TP4-18Dy200-8X480mm-normmasked';
-	'18May2C-TP4-18Dy200-8X640mm-normmasked';
-	'18May2C-TP4-18Dy400-8X480mm-normmasked';
-	'18May2C-TP4-18Dy400-8X640mm-normmasked';
-% 	'17May2C-TP4-18Dy200-0.4X720mm-16normmasked';
-	'17May2C-TP4-18Dy200-0.4X720mm-8normmasked';
-% 	'17May2C-TP4-18Dy400-0.4X720mm-16normmasked';
-	'17May2C-TP4-18Dy400-0.4X720mm-8normmasked';
-}
+%% Autostitch:
 
 index = 10;
-% for i=1:size(folders)
-% 	v = im7Load([folders{i} '/B' sprintf('%05d', index) '*.im7']);
-% % 	figure;
-% % 	showf(v);
-% % 	setPlotFormatting(v);
-% end
-
-[a,sma] = im7Stitch(foldersA,index,0,0,0,0);
-[b,smb] = im7Stitch(foldersB,index,0,0,0,0);
-[c,smc] = im7Stitch(foldersC,index,0,0,0,0);
-[d,smd] = im7Stitch(foldersD,index,0,0,0,0);
-[e,sme] = im7Stitch(foldersE,index,0,0,0,0);
-temp = {a;b;c;d;e;};
-[r,smr] = im7Stitch(temp,index,0,0,0,0);
+folders = dir('*2C*mm');
+folderNames = {folders.name}.'
+[r,smr] = im7Stitch(folderNames,index,0,0,0,0);
 max = 17;
 results = {};
 for i=1:max
 	disp(['processing ' int2str(i)]);
-	a=applyStitchmap(sma,foldersA,i);
-	b=applyStitchmap(smb,foldersB,i);
-	c=applyStitchmap(smc,foldersC,i);
-	d=applyStitchmap(smd,foldersD,i);
-	e=applyStitchmap(sme,foldersE,i);
-	temp = {a;b;c;d;e;};
-	results{i} = applyStitchmap(smr,temp);
+	results{i} = applyStitchmap(smr,folderNames,i);
 	current = results{i};
 	t=figure;
 	showf(current);
 	setPlotFormatting(current);
-	saveas(t,['Opt_TP4_fullstitch_' int2str(i)],'fig');
-	saveas(t,['Opt_TP4_fullstitch_' int2str(i)],'png');
-	save(['Opt_TP4_fullstitch_' int2str(i)], 'current');
+	saveas(t,['Opt_TP2_fullstitch_' int2str(i)],'fig');
+	saveas(t,['Opt_TP2_fullstitch_' int2str(i)],'png');
+	save(['Opt_TP2_fullstitch_' int2str(i)], 'current');
 	close all;
 end
-%figure; showf(result); setPlotFormatting(result);
 
 %% Move files out of the TimeMeanQF_Scalar folder because it breaks everything:
 % 
@@ -325,7 +397,7 @@ end
 % 	'7Oct3C-TP12-15Dy192-3c17mus'
 % }
 % % folderList=dir('*us');
-
+% 
 % folders={folderList.name}.'
 % im73Dplot(folders);
 % drawWingModel()
@@ -389,7 +461,7 @@ end
 % 		for filenumber = 1:17
 % 			try %to catch exceptions if file doesn't exist
 % 				t = figure;
-%				filename = ['B' sprintf('%05d', filenumber) '*.im7'];
+% 				filename = ['B' sprintf('%05d', filenumber) '*.im7'];
 % 				v = im7Load(filename);
 % 				v.index = filenumber;
 % 				showf(v);
