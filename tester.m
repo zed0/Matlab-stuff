@@ -328,25 +328,52 @@
 % figure; showf(r); setPlotFormatting(r);
 
 %% Autostitch:
-
+run('symphonySettings');
 index = 10;
 folders = dir('*2C*mm');
-folderNames = {folders.name}.'
-[r,smr] = im7Stitch(folderNames,index,0,0,0,0);
-max = 17;
-results = {};
-for i=1:max
-	disp(['processing ' int2str(i)]);
-	results{i} = applyStitchmap(smr,folderNames,i);
-	current = results{i};
-	t=figure;
-	showf(current);
-	setPlotFormatting(current);
-	saveas(t,['Opt_TP2_fullstitch_' int2str(i)],'fig');
-	saveas(t,['Opt_TP2_fullstitch_' int2str(i)],'png');
-	save(['Opt_TP2_fullstitch_' int2str(i)], 'current');
-	close all;
-end
+folderNames = {folders.name}.';
+current = zeros(0,0);
+%for j = 1:size(folderNames,1)
+    foldername1 = folderNames(1)
+    foldername2 = folderNames(2)
+    max = 17;
+    results = {};
+    %for i=1:max
+    i=4;
+        v1 = im7Load([foldername1{1} '/B' sprintf('%05d', i) '*.im7']);
+        v2 = im7Load([foldername2{1} '/B' sprintf('%05d', i) '*.im7']);
+        results = autostitch(v1.w, v2.w, [0.1, 0.4], [0.1, 0.4]);
+        %current = results{i};
+    % 	t=figure;
+    % 	showf(current);
+    % 	setPlotFormatting(current);
+    % 	saveas(t,['test/Opt_TP2_fullstitch_' int2str(i)],'fig');
+    % 	saveas(t,['test/Opt_TP2_fullstitch_' int2str(i)],'png');
+    % 	save(['test/Opt_TP2_fullstitch_' int2str(i)], 'current');
+    % 	close all;
+    %end
+%end
+
+%% Measured stitch:
+% 
+% index = 10;
+% folders = dir('*2C*mm');
+% folderNames = {folders.name}.'
+% [r,smr] = im7Stitch(folderNames,index,0,0,0,0);
+% max = 17;
+% results = {};
+% for i=1:max
+% 	disp(['processing ' int2str(i)]);
+% 	results{i} = applyStitchmap(smr,folderNames,i);
+% 	current = results{i};
+% 	t=figure;
+% 	showf(current);
+% 	setPlotFormatting(current);
+% 	saveas(t,['test/Opt_TP2_fullstitch_' int2str(i)],'fig');
+% 	saveas(t,['test/Opt_TP2_fullstitch_' int2str(i)],'png');
+% 	save(['test/Opt_TP2_fullstitch_' int2str(i)], 'current');
+% 	close all;
+% end
 
 %% Move files out of the TimeMeanQF_Scalar folder because it breaks everything:
 % 
