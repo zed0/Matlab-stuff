@@ -9,15 +9,15 @@
 u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
 v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
 w = im7Load('OptTP4-2C-5Dy322x508-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
-[a b c d]= autostitch(u.w, v.w);
-a(isnan(a))=0;
-e = autostitch(a, w.w);
-e = trimImage(e);
+[canvas row col cmap]= autostitch(u.w, v.w);
+canvas(isnan(canvas))=0;
+target = autostitch(canvas, w.w);
+target = trimImage(target);
 scaleX = getScale(v.Attributes, 'X');
 scaleY = getScale(v.Attributes, 'Y');
-x = 0:scaleX:size(e,1);
-y = 0:scaleY:size(e,2);
-imagesc(x,y,e);
+x = 0:scaleX:size(target,1);
+y = 0:scaleY:size(target,2);
+imagesc(x,y,target);
 
 %% The attached image shows the result.
 % Correlation peak of 0.9958 for the Velocity.
@@ -25,15 +25,15 @@ imagesc(x,y,e);
 u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00010_Turb kinetic E.im7');
 v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00010_Turb kinetic E.im7');
 w = im7Load('OptTP4-2C-5Dy322x508-8normalmasked/TimeMeanQF_Scalar/B00010_Turb kinetic E.im7');
-[a b c d]= autostitch(u.w, v.w);
-a(isnan(a))=0;
-e = autostitch(a, w.w);
-e = trimImage(e);
+[canvas row col cmap]= autostitch(u.w, v.w);
+canvas(isnan(canvas))=0;
+target = autostitch(canvas, w.w);
+target = trimImage(target);
 scaleX = getScale(v.Attributes, 'X');
 scaleY = getScale(v.Attributes, 'Y');
-x = 0:scaleX:size(e,1);
-y = 0:scaleY:size(e,2);
-imagesc(x,y,e);
+x = 0:scaleX:size(target,1);
+y = 0:scaleY:size(target,2);
+imagesc(x,y,target);
 
 %% The attached image shows the result.
 % Correlation peak of 0.9851 for the TKE.
@@ -41,15 +41,15 @@ imagesc(x,y,e);
 u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00009_abs(RMS V).im7');
 v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00009_abs(RMS V).im7');
 w = im7Load('OptTP4-2C-5Dy322x508-8normalmasked/TimeMeanQF_Scalar/B00009_abs(RMS V).im7');
-[a b c d]= autostitch(u.w, v.w);
-a(isnan(a))=0;
-e = autostitch(a, w.w);
-e = trimImage(e);
+[canvas row col cmap]= autostitch(u.w, v.w);
+canvas(isnan(canvas))=0;
+target = autostitch(canvas, w.w);
+target = trimImage(target);
 scaleX = getScale(v.Attributes, 'X');
 scaleY = getScale(v.Attributes, 'Y');
-x = 0:scaleX:size(e,1);
-y = 0:scaleY:size(e,2);
-imagesc(x,y,e);
+x = 0:scaleX:size(target,1);
+y = 0:scaleY:size(target,2);
+imagesc(x,y,target);
 
 %% The attached image shows the result.
 % Correlation peak of 0.9792 for the RMS.
@@ -72,41 +72,59 @@ figure, imshow(cc)
 
 
 %% Comparing different correlation areas:
-
+run('symphonySettings');
 u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
 v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
 window ={
 	[1/3,2/3;1/3,2/3],
-	[1/5,3.5/5;2/5,3/5],
-	[1/3,2/3;2/5,3/5],
-	[1/5,3.5/5;12/25,13/25],
+% 	[1/5,3.5/5;2/5,3/5],
+% 	[1/3,2/3;2/5,3/5],
+% 	[1/5,3.5/5;12/25,13/25],
 };
+
 scaleX = getScale(u.Attributes, 'X');
 scaleY = getScale(u.Attributes, 'Y');
+scaleZ = getScale(u.Attributes, 'Z');
 for i=1:size(window,1)
-	[a b c d e]= autostitch(u.w, v.w,window{i}(1,:),window{i}(2,:));
-	a=trimImage(a);
-	figure;
-	subplot(4,2,[1,2]);
-    imagesc(x,y,u.w);
+	[canvas, row, col, cmap, target, targetX, targetY] = ...
+        autostitch(u.w, v.w,window{i}(1,:),window{i}(2,:));
+	[canvas, trimX, trimY] = trimImage(canvas);
+    subplot(4,2,[1,2]);
+    imagesc([0, size(u.w,2)*scaleX], [0, size(u.w,1)*scaleY],u.w,colorLimits(4,:));
+    colorbar;
 	subplot(4,2,[3,4]);
-    imagesc(x,y,v.w);
+    imagesc([0, size(v.w,2)*scaleX], [0, size(v.w,1)*scaleY],v.w,colorLimits(4,:));
+    colorbar;
+    drawRect( ...
+        targetX*scaleX,...
+        targetY*scaleY,...
+        (size(target,2))*scaleX,...
+        (size(target,1))*scaleY,...
+        'EdgeColor', 'b' ...
+    );
+
 	subplot(4,2,[5,6]);
-	x = 0:scaleX:size(a,1)*scaleX;
-	y = 0:scaleY:size(a,2)*scaleY;
-	imagesc(x,y,a);
-	title(strcat(...
-        rats(window{i}(1,1)),'-',...
-        rats(window{i}(1,2)),',',...
-        rats(window{i}(2,1)),'-',...
-        rats(window{i}(2,2)),...
-        ', correlation: ',num2str(max(max(d)))...
-    ));
+    imagesc([0, size(canvas,2)*scaleX], [0, size(canvas,1)*scaleY],canvas,colorLimits(4,:));
+    colorbar;
+    hold on;
+    plot(col*scaleX, row*scaleY, 'g*');
+    drawRect( ...
+        (col + targetX - find(trimX, 1))*scaleX,...
+        (row + targetY - find(trimY, 1))*scaleY,...
+        (size(target,2))*scaleX,...
+        (size(target,1))*scaleY,...
+        'EdgeColor', 'b' ...
+    );
 	subplot(4,2,7);
-	imagesc(e);
-	subplot(4,2,8);
-	imagesc(d);
+    imagesc([0, size(target,2)*scaleX], [0, size(target,1)*scaleY],target,colorLimits(4,:));
+    colorbar;
+    title(strcat(...
+        strtrim(rats(window{i}(1,1))),'-',strtrim(rats(window{i}(1,2))),', ',...
+        strtrim(rats(window{i}(2,1))),'-',strtrim(rats(window{i}(2,2)))...
+    ));
+    subplot(4,2,8);
+    imagesc([0, size(cmap,2)*scaleX], [0, size(cmap,1)*scaleY],cmap, [-1, 1]);
+    colorbar;
+    title(strcat('Max correlation: ',num2str(max(max(cmap)))));
 end
-
-
 % Correlation can be found reasonably easily however this is in terms of pixels.  Finding it in terms of mm may seem as easy as multiplying by the scaling factor, and this does work for working out seperation of the two images.  For adding axes to the images however this is rather more complicated.

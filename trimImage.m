@@ -1,6 +1,8 @@
-function [ result ] = trimImage(image)
+function [ result, x, y ] = trimImage(image)
 %TRIMIMAGE Removes whitespace rows from sides of images.
 %   Detailed explanation goes here
-	result = image(any(image,2),any(image,1));
+    y = any(image,2);
+    x = any(image,1);
+	result = image(y, x);
 end
 
