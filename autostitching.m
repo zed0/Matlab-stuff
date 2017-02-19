@@ -77,23 +77,26 @@ u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg
 v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
 window ={
 	[1/3,2/3;1/3,2/3],
-% 	[1/5,3.5/5;2/5,3/5],
-% 	[1/3,2/3;2/5,3/5],
-% 	[1/5,3.5/5;12/25,13/25],
+	[1/5,3.5/5;2/5,3/5],
+	[1/3,2/3;2/5,3/5],
+	[1/5,3.5/5;12/25,13/25],
 };
 
 scaleX = getScale(u.Attributes, 'X');
 scaleY = getScale(u.Attributes, 'Y');
 scaleZ = getScale(u.Attributes, 'Z');
 for i=1:size(window,1)
-	[canvas, row, col, cmap, target, targetX, targetY] = ...
+	[canvas, row, col, cmap, target, targetY, targetX] = ...
         autostitch(u.w, v.w,window{i}(1,:),window{i}(2,:));
 	[canvas, trimX, trimY] = trimImage(canvas);
+    figure;
     subplot(4,2,[1,2]);
     imagesc([0, size(u.w,2)*scaleX], [0, size(u.w,1)*scaleY],u.w,colorLimits(4,:));
+    title('Image 1');
     colorbar;
 	subplot(4,2,[3,4]);
     imagesc([0, size(v.w,2)*scaleX], [0, size(v.w,1)*scaleY],v.w,colorLimits(4,:));
+    title('Image 2, with target window');
     colorbar;
     drawRect( ...
         targetX*scaleX,...
@@ -105,9 +108,8 @@ for i=1:size(window,1)
 
 	subplot(4,2,[5,6]);
     imagesc([0, size(canvas,2)*scaleX], [0, size(canvas,1)*scaleY],canvas,colorLimits(4,:));
+    title('Stitched image, with target window');
     colorbar;
-    hold on;
-    plot(col*scaleX, row*scaleY, 'g*');
     drawRect( ...
         (col + targetX - find(trimX, 1))*scaleX,...
         (row + targetY - find(trimY, 1))*scaleY,...
@@ -118,10 +120,7 @@ for i=1:size(window,1)
 	subplot(4,2,7);
     imagesc([0, size(target,2)*scaleX], [0, size(target,1)*scaleY],target,colorLimits(4,:));
     colorbar;
-    title(strcat(...
-        strtrim(rats(window{i}(1,1))),'-',strtrim(rats(window{i}(1,2))),', ',...
-        strtrim(rats(window{i}(2,1))),'-',strtrim(rats(window{i}(2,2)))...
-    ));
+    title('Target Region');
     subplot(4,2,8);
     imagesc([0, size(cmap,2)*scaleX], [0, size(cmap,1)*scaleY],cmap, [-1, 1]);
     colorbar;
