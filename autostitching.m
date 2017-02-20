@@ -76,40 +76,54 @@ run('symphonySettings');
 u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
 v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
 window ={
-	[1/3,2/3;1/3,2/3],
-	[1/5,3.5/5;2/5,3/5],
-	[1/3,2/3;2/5,3/5],
-	[1/5,3.5/5;12/25,13/25],
+	'Target 1', [1/3,2/3;1/3,2/3];
+	'Target 2', [1/5,3.5/5;2/5,3/5];
+	'Target 3', [1/3,2/3;2/5,3/5];
+	'Target 4', [1/5,3.5/5;12/25,13/25];
 };
-
 scaleX = getScale(u.Attributes, 'X');
 scaleY = getScale(u.Attributes, 'Y');
 scaleZ = getScale(u.Attributes, 'Z');
 for i=1:size(window,1)
 	[canvas, row, col, cmap, target, targetY, targetX] = ...
-        autostitch(u.w, v.w, window{i}(1,:), window{i}(2,:));
+        autostitch(u.w, v.w, window{i,2}(1,:), window{i,2}(2,:));
 	[canvas, trimX, trimY] = trimImage(canvas);
-    figure;
-    subplot(4,2,[1,2]);
-    imagesc([0, size(u.w,2)*scaleX], [0, size(u.w,1)*scaleY],u.w,colorLimits(4,:));
+    figure
+    suptitle(window{i,1});
+    subplot(3,2,1);
+    [image1, trimX1, trimY1] = trimImage(u.w);
+    imagesc([0, size(image1,2)*scaleX], [0, size(image1,1)*scaleY],image1,colorLimits(4,:));
+    xlabel('relative z (mm)');
+    ylabel('relative x (mm)');
     title('Image 1');
-    colorbar;
-	subplot(4,2,[3,4]);
-    imagesc([0, size(v.w,2)*scaleX], [0, size(v.w,1)*scaleY],v.w,colorLimits(4,:));
+    axis image;
+    c = colorbar;
+    c.Label.String = [u.namew, '(', u.unitw, ')'];
+	subplot(3,2,3);
+    [image2, trimX2, trimY2] = trimImage(v.w);
+    imagesc([0, size(image2,2)*scaleX], [0, size(image2,1)*scaleY],image2,colorLimits(4,:));
+    xlabel('relative z (mm)');
+    ylabel('relative x (mm)');
     title('Image 2, with target window');
-    colorbar;
+    c = colorbar;
+    c.Label.String = [u.namew, '(', u.unitw, ')'];
+    axis image;
     drawRect( ...
-        targetX*scaleX,...
-        targetY*scaleY,...
+        (targetX - find(trimX2, 1))*scaleX,...
+        (targetY - find(trimY2, 1))*scaleY,...
         (size(target,2))*scaleX,...
         (size(target,1))*scaleY,...
         'EdgeColor', 'b' ...
     );
 
-	subplot(4,2,[5,6]);
+	subplot(3,2,[5, 6]);
     imagesc([0, size(canvas,2)*scaleX], [0, size(canvas,1)*scaleY],canvas,colorLimits(4,:));
+    xlabel('relative z (mm)');
+    ylabel('relative x (mm)');
     title('Stitched image, with target window');
-    colorbar;
+    c = colorbar;
+    c.Label.String = [u.namew, '(', u.unitw, ')'];
+    axis image;
     drawRect( ...
         (col + targetX - find(trimX, 1))*scaleX,...
         (row + targetY - find(trimY, 1))*scaleY,...
@@ -117,21 +131,31 @@ for i=1:size(window,1)
         (size(target,1))*scaleY,...
         'EdgeColor', 'b' ...
     );
-	subplot(4,2,7);
+	subplot(3,2,2);
     imagesc([0, size(target,2)*scaleX], [0, size(target,1)*scaleY],target,colorLimits(4,:));
-    colorbar;
-    title('Target Region');
-    subplot(4,2,8);
+    c = colorbar;
+    c.Label.String = [u.namew, '(', u.unitw, ')'];
+    axis image;
+    xlabel('relative z (mm)');
+    ylabel('relative x (mm)');
+    title({...
+        'Target Region',...
+        [num2str(size(target,2)*scaleX), ' by ', num2str(size(target,1)*scaleY)],...
+    });
+    subplot(3,2,4);
     imagesc([0, size(cmap,2)*scaleX], [0, size(cmap,1)*scaleY],cmap, [-1, 1]);
     colorbar;
+    axis image;
     cross = normxcorr2(target, u.w);
     auto = normxcorr2(target, v.w);
     disc_0_5 = discriminationRatio(pedestal(0.5, auto), pedestal(0.5, cross));
     disc_0_9 = discriminationRatio(pedestal(0.9, auto), pedestal(0.9, cross));
+    xlabel('relative z (mm)');
+    ylabel('relative x (mm)');
     title({...
-        strcat('Max correlation: ', num2str(max(max(cmap)))),...
-        strcat('Discrimination Ratio (pedestal(0.5)): ', num2str(disc_0_5)),...
-        strcat('Discrimination Ratio (pedestal(0.9)): ', num2str(disc_0_9))...
+        ['Max correlation: ', num2str(max(max(cmap)))],...
+        ['Discrimination Ratio (pedestal(0.5)): ', num2str(disc_0_5)],...
+        ['Discrimination Ratio (pedestal(0.9)): ', num2str(disc_0_9)]...
     });
 end
 % Correlation can be found reasonably easily however this is in terms of pixels.  Finding it in terms of mm may seem as easy as multiplying by the scaling factor, and this does work for working out seperation of the two images.  For adding axes to the images however this is rather more complicated.
