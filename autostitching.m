@@ -87,7 +87,7 @@ scaleY = getScale(u.Attributes, 'Y');
 scaleZ = getScale(u.Attributes, 'Z');
 for i=1:size(window,1)
 	[canvas, row, col, cmap, target, targetY, targetX] = ...
-        autostitch(u.w, v.w,window{i}(1,:),window{i}(2,:));
+        autostitch(u.w, v.w, window{i}(1,:), window{i}(2,:));
 	[canvas, trimX, trimY] = trimImage(canvas);
     figure;
     subplot(4,2,[1,2]);
@@ -124,6 +124,14 @@ for i=1:size(window,1)
     subplot(4,2,8);
     imagesc([0, size(cmap,2)*scaleX], [0, size(cmap,1)*scaleY],cmap, [-1, 1]);
     colorbar;
-    title(strcat('Max correlation: ',num2str(max(max(cmap)))));
+    cross = normxcorr2(target, u.w);
+    auto = normxcorr2(target, v.w);
+    disc_0_5 = discriminationRatio(pedestal(0.5, auto), pedestal(0.5, cross));
+    disc_0_9 = discriminationRatio(pedestal(0.9, auto), pedestal(0.9, cross));
+    title({...
+        strcat('Max correlation: ', num2str(max(max(cmap)))),...
+        strcat('Discrimination Ratio (pedestal(0.5)): ', num2str(disc_0_5)),...
+        strcat('Discrimination Ratio (pedestal(0.9)): ', num2str(disc_0_9))...
+    });
 end
 % Correlation can be found reasonably easily however this is in terms of pixels.  Finding it in terms of mm may seem as easy as multiplying by the scaling factor, and this does work for working out seperation of the two images.  For adding axes to the images however this is rather more complicated.
