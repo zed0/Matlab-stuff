@@ -73,8 +73,8 @@ figure, imshow(cc)
 
 %% Comparing different correlation areas:
 run('symphonySettings');
-u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
-v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00004_abs(Avg V).im7');
+u = im7Load('OptTP4-2C-5Dy322x254-8normalmasked/TimeMeanQF_Scalar/B00010_Turb kinetic E.im7');
+v = im7Load('OptTP4-2C-5Dy322x381-8normalmasked/TimeMeanQF_Scalar/B00010_Turb kinetic E.im7');
 window ={
 	'Target 1', [1/3,2/3;1/3,2/3];
 	'Target 2', [1/5,3.5/5;2/5,3/5];
@@ -89,10 +89,11 @@ for i=1:size(window,1)
         autostitch(u.w, v.w, window{i,2}(1,:), window{i,2}(2,:));
 	[canvas, trimX, trimY] = trimImage(canvas);
     figure
+    set(0,'DefaultFigureColormap', jet);
     suptitle(window{i,1});
     subplot(3,2,1);
     [image1, trimX1, trimY1] = trimImage(u.w);
-    imagesc([0, size(image1,2)*scaleX], [0, size(image1,1)*scaleY],image1,colorLimits(4,:));
+    imagesc([0, size(image1,2)*scaleX], [0, size(image1,1)*scaleY],image1,colorLimits(10,:));
     xlabel('relative z (mm)');
     ylabel('relative x (mm)');
     title('Image 1');
@@ -101,7 +102,7 @@ for i=1:size(window,1)
     c.Label.String = [u.namew, '(', u.unitw, ')'];
 	subplot(3,2,3);
     [image2, trimX2, trimY2] = trimImage(v.w);
-    imagesc([0, size(image2,2)*scaleX], [0, size(image2,1)*scaleY],image2,colorLimits(4,:));
+    imagesc([0, size(image2,2)*scaleX], [0, size(image2,1)*scaleY],image2,colorLimits(10,:));
     xlabel('relative z (mm)');
     ylabel('relative x (mm)');
     title('Image 2, with target window');
@@ -113,11 +114,11 @@ for i=1:size(window,1)
         (targetY - find(trimY2, 1))*scaleY,...
         (size(target,2))*scaleX,...
         (size(target,1))*scaleY,...
-        'EdgeColor', 'b' ...
+        'EdgeColor', 'r' ...
     );
 
 	subplot(3,2,[5, 6]);
-    imagesc([0, size(canvas,2)*scaleX], [0, size(canvas,1)*scaleY],canvas,colorLimits(4,:));
+    imagesc([0, size(canvas,2)*scaleX], [0, size(canvas,1)*scaleY],canvas,colorLimits(10,:));
     xlabel('relative z (mm)');
     ylabel('relative x (mm)');
     title('Stitched image, with target window');
@@ -129,10 +130,10 @@ for i=1:size(window,1)
         (row + targetY - find(trimY, 1))*scaleY,...
         (size(target,2))*scaleX,...
         (size(target,1))*scaleY,...
-        'EdgeColor', 'b' ...
+        'EdgeColor', 'r' ...
     );
 	subplot(3,2,2);
-    imagesc([0, size(target,2)*scaleX], [0, size(target,1)*scaleY],target,colorLimits(4,:));
+    imagesc([0, size(target,2)*scaleX], [0, size(target,1)*scaleY],target,colorLimits(10,:));
     c = colorbar;
     c.Label.String = [u.namew, '(', u.unitw, ')'];
     axis image;
@@ -146,10 +147,14 @@ for i=1:size(window,1)
     imagesc([0, size(cmap,2)*scaleX], [0, size(cmap,1)*scaleY],cmap, [-1, 1]);
     colorbar;
     axis image;
-    cross = normxcorr2(target, u.w);
     auto = normxcorr2(target, v.w);
-    disc_0_5 = discriminationRatio(pedestal(0.5, auto), pedestal(0.5, cross));
-    disc_0_9 = discriminationRatio(pedestal(0.9, auto), pedestal(0.9, cross));
+    cross = normxcorr2(target, u.w);
+    ped_0_5_auto = pedestal(0.5, auto)
+    ped_0_5_cross = pedestal(0.5, cross)
+    ped_0_9_auto = pedestal(0.9, auto)
+    ped_0_9_cross = pedestal(0.9, cross)
+    disc_0_5 = discriminationRatio(ped_0_5_auto, ped_0_5_cross)
+    disc_0_9 = discriminationRatio(ped_0_9_auto, ped_0_9_cross)
     xlabel('relative z (mm)');
     ylabel('relative x (mm)');
     title({...
